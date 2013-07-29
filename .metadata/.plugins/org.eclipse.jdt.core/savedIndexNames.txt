@@ -1,0 +1,3 @@
+INDEX VERSION 1.126+C:\Users\Comarch\Documents\GitHub\wrzucak\.metadata\.plugins\org.eclipse.jdt.core
+1883061670.index
+3977571333.index
