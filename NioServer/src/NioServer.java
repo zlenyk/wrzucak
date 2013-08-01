@@ -1,26 +1,34 @@
-import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.net.ServerSocket;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.ByteBuffer;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
 import java.nio.charset.Charset;
 
 
 public class NioServer implements Runnable{
-	ServerSocket  socket;
+	ServerSocketChannel channel;
 	ByteBuffer std;
-	File folder;
+	File fileHolder;
 	public static int getPort(){
 		return 12345;
 	}
 	
 	public NioServer(){
 		try {
-			folder = new File("fileHolder");
-			socket = new ServerSocket(getPort());
+			
+			fileHolder = new File("fileHolder");
+			fileHolder.mkdir();
+			
+			channel = ServerSocketChannel.open();
+			channel.socket().bind(new InetSocketAddress(getPort()));
+			
 			System.out.println("Serwer wystartowa³");
-			std = ByteBuffer.allocate(2048);
+			std = ByteBuffer.allocate(8192);
+			
 		} catch (IOException e) {
 			System.out.println("B³¹d przy zak³adaniu gniazda.");
 			System.exit(-1);
@@ -32,32 +40,54 @@ public class NioServer implements Runnable{
 		stringBuffer.append(charset.decode(buffer));
 		return stringBuffer.toString();
 	}
-	void wyslijListe(){}
-	void wyslijPlik(int number){}
+	private void putStringIntoBuffer(String s){
+		std.clear();
+		std.put(s.getBytes());
+	}
+	private void sendMessage(String message,SocketChannel socket){
+		putStringIntoBuffer(message);
+		while(std.hasRemaining()){
+			try {
+				socket.write(std);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	private void wyslijListe(SocketChannel socket){
+		File[] fileList = fileHolder.listFiles();
+		String msgList = "";
+		for(File f: fileList)
+			msgList += f.toString() + '\n';
+		
+		sendMessage(msgList,socket);
+	}
+	private void wyslijPlik(int number){}
 	
 	private int getFileNumber(String data)
 	{
 		return Integer.parseInt(data.substring(4));
 	}
-	
+	private void sendBuffer(){}
 	public void run(){
 		while(true){
 			try {
-				Socket client = socket.accept();
+				SocketChannel socket = channel.accept();
 				System.out.println("Jest klient.");
-				std.allocate(8192);
-				BufferedInputStream inFromClient = new BufferedInputStream(client.getInputStream());
+
 				while(true)
 				{
-					int b = inFromClient.read();
-					if(b == -1) break;
-					std.put((byte) b);
+					
+					int ret = socket.read(std);
+					if(ret == -1) break;
+					
 					String data = makeStringFromBuffer(std);
-					if(data == "List") wyslijListe();
+					
+					if(data == "List") wyslijListe(SocketChannel socket);
 					else if(data == "Exit") break;
 					else wyslijPlik(getFileNumber(data));
 				}
-				client.close();
+				channel.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.exit(-1);
