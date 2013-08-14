@@ -58,6 +58,7 @@ public class NioKlient2013 extends Thread {
 		while ((c = zSerwera.read()) != '\n') {
 			linia = linia + (char) c;
 		}
+
 		return linia;
 	}
 
@@ -84,7 +85,6 @@ public class NioKlient2013 extends Thread {
 		wyslij(s);
 		try {
 			String odpowiedz = czytajLinie();
-			// String odpowiedz = zSerweraBR.readLine();
 			System.out.println("Odpowiedz:" + odpowiedz);
 			if (odpowiedz.startsWith("OK")) {
 				System.out.println(odpowiedz);
@@ -148,7 +148,6 @@ public class NioKlient2013 extends Thread {
 	 *            the command line arguments
 	 */
 	public static void main(String[] args) {
-		// TODO code application logic here
 		NioKlient2013 klient = new NioKlient2013();
 		klient.start();
 	}

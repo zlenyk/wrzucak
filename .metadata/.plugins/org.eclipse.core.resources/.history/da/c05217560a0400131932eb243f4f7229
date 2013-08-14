@@ -1,0 +1,203 @@
+import java.io.File;
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+
+public class NioServer implements Runnable{
+	ServerSocketChannel channel;
+	ByteBuffer std;
+	File fileHolder;
+	public static int getPort(){
+		return 12345;
+	}
+	public NioServer(){
+		try {
+			
+			fileHolder = new File("fileHolder");
+			fileHolder.mkdir();
+			
+			channel = ServerSocketChannel.open();
+			channel.socket().bind(new InetSocketAddress(getPort()));
+			
+			System.out.println("Serwer wystartowa³");
+			std = ByteBuffer.allocate(8192);
+			
+		} catch (IOException e) {
+			System.out.println("B³¹d przy zak³adaniu gniazda.");
+			System.exit(-1);
+		}
+	}
+	////////////////////////////////
+	class Message{
+		public static final int GET = 1;
+		public static final int LIST = 2;
+		public static final int EXIT = 3;
+		public static final int UNEXPECTED_EXIT = 4;
+		private int number;
+		private int type;
+		Message(){
+			number = -1;
+			type = -1;
+		}
+		public void setNumber(int l){
+			number = l;
+		}
+		public int getNumber(){
+			return number;
+		}
+		public void setType(int t){
+			type = t;
+		}
+		public int getType(){
+			return type;
+		}
+	}
+	////////////////////////////////
+	
+	private void sendBuffer(SocketChannel socket){
+		while(std.hasRemaining()){
+			try {
+				socket.write(std);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	public Message getMessage(SocketChannel socket){
+		
+		std.clear();
+		int ret = 0;
+		try {
+			ret = socket.read(std);
+		} catch (IOException e) {
+			System.out.println("B³¹d przy odczytaniu wiadomoœci");
+		}
+		if(ret == -1){
+			Message mes = new Message();
+			mes.setType(Message.UNEXPECTED_EXIT);
+			return mes;
+		}
+		std.flip();
+		
+		byte[] bytes = new byte[4];
+
+		for(int i = 0; i<4; i++)
+			bytes[i] = std.get();
+		
+		String message = new String(bytes);
+		System.out.println(message);
+		System.out.println(std);
+		Message mes = new Message();
+		if(message.equals("List")){
+			mes.setType(Message.LIST);
+		}
+		if(message.equals("Get;")){
+			byte[] num = new byte[10];
+			int i = 0;
+			while((num[i] = std.get()) != -1)
+				i++;
+			mes.setType(Message.GET);
+			mes.setNumber(Integer.parseInt(new String(num)));
+		}
+		if(message.equals("Exit")){
+			mes.setType(Message.EXIT);
+		}
+		return mes;
+	}
+	
+	
+	private void putStringIntoBuffer(String s){
+		std.clear();
+		std.put(s.getBytes());
+		std.flip();
+	}
+	
+	private void sendMessage(String message,SocketChannel socket){
+		putStringIntoBuffer(message);
+		sendBuffer(socket);
+	}
+	
+	private void wyslijListe(SocketChannel socket){
+		File[] fileList = fileHolder.listFiles();
+		String msgList = "";
+		for(File f: fileList)
+			msgList += f.getName() + " ";
+		msgList += '\n';
+		sendMessage(msgList,socket);
+	}
+	
+	private void wyslijPlik(File toSend,SocketChannel socket){
+		putFileIntoBuffer(toSend);
+		sendBuffer(socket);
+	}
+	
+	private void putFileIntoBuffer(File toSend) {
+		String stringPath = toSend.getPath();
+		Path path = Paths.get(stringPath);
+		
+		try {
+			std.clear();
+			std.put("OK;".getBytes());
+			Long len = toSend.length();
+			byte byteLen = len.byteValue();
+			std.put(byteLen);
+			std.put(";".getBytes());
+			std.put(Files.readAllBytes(path));
+		} catch (IOException e) {
+			System.out.println("B³¹d przy wczytywaniu pliku");
+		}
+		std.flip();
+	}
+
+	private File getFile(int number)
+	{
+		File[] fileList = fileHolder.listFiles();
+		return fileList[number];
+	}
+	public void run(){
+		while(true){
+			try {
+				SocketChannel socket = channel.accept();
+				System.out.println("Jest klient.");
+				
+				boolean finish = false;
+				while(!finish)
+				{
+					
+					Message mes = getMessage(socket);
+					
+					switch(mes.getType()){
+						case Message.LIST:
+							wyslijListe(socket);
+							break;
+						case Message.GET:
+							File file = getFile(mes.getNumber());
+							wyslijPlik(file,socket);
+							break;
+						case Message.EXIT:
+							finish = true;
+							break;
+						case Message.UNEXPECTED_EXIT:
+							finish = true;
+					}
+				}
+				channel.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.exit(-1);
+			}
+		}
+	}
+	
+	public static void main(String[] args){
+		new Thread(new NioServer()).start();
+	}
+}

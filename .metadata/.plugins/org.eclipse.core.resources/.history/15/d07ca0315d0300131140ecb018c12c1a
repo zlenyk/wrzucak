@@ -1,0 +1,8 @@
+
+public class Test {
+	public static void main(String[] args){
+		int test = 1;
+		byte[] b = test.get
+		System.out.println(b.length);
+	}
+}

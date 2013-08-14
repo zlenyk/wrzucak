@@ -1,19 +1,6 @@
 INDEX VERSION 1.126+C:\Users\Comarch\Documents\GitHub\wrzucak\.metadata\.plugins\org.eclipse.jdt.core
-3133528496.index
-1883061670.index
-145432794.index
-2508386681.index
-4041092966.index
-1115467115.index
-4108727661.index
-30765161.index
-1697886153.index
-1995173708.index
-1299022128.index
-4155206848.index
-305854171.index
-3974580528.index
 3977571333.index
-163172794.index
-3065916431.index
-1498219845.index
+2467266727.index
+2508386681.index
+145432794.index
+1883061670.index

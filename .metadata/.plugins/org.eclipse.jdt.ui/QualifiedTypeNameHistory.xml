@@ -3,6 +3,13 @@
 <fullyQualifiedTypeName name="java.nio.channels.spi.SelectorProvider"/>
 <fullyQualifiedTypeName name="java.io.BufferedInputStream"/>
 <fullyQualifiedTypeName name="java.io.BufferedOutputStream"/>
+<fullyQualifiedTypeName name="java.nio.file.Path"/>
+<fullyQualifiedTypeName name="java.nio.file.Paths"/>
+<fullyQualifiedTypeName name="java.nio.file.Files"/>
 <fullyQualifiedTypeName name="java.nio.CharBuffer"/>
 <fullyQualifiedTypeName name="java.nio.channels.SocketChannel"/>
+<fullyQualifiedTypeName name="inter.SerwerInt"/>
+<fullyQualifiedTypeName name="java.rmi.RemoteException"/>
+<fullyQualifiedTypeName name="java.rmi.server.UnicastRemoteObject"/>
+<fullyQualifiedTypeName name="server.Serwer"/>
 </qualifiedTypeNameHistroy>
