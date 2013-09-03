@@ -1,0 +1,128 @@
+package test;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+/**
+ * Servlet implementation class Login
+ */
+@WebServlet("/Login")
+public class Login extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	private static final String mainURL = "http://localhost:8080/Shop/";
+	private static final String shopURL = "http://localhost:8080/Shop/List";
+	private static final String dataBaseURL = "jdbc:postgresql://127.0.0.1:5432/postgres";
+	private static final String dataBaseLogin = "postgres";
+	private static final String dataBasePassword = "postgres";
+	private static final String driverURL = "org.postgresql.Driver";
+	
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		String pass = request.getParameter("password");
+		String log = request.getParameter("login");
+		String action = request.getParameter("action");
+		HttpSession session = request.getSession();
+		boolean suceeded;
+		
+		if(action.equals("login")){
+			suceeded = login(log,pass);
+			if(suceeded){System.out.println("dd");
+				session.setAttribute("login", log);
+				session.setAttribute("password", pass);
+				session.setAttribute("logged",true);
+				response.sendRedirect(shopURL);
+			}
+			else{System.out.println("NIE");
+				response.sendRedirect(mainURL);
+			}
+			
+		}
+		else if(action.equals("register")){
+			
+			suceeded = register(log,pass);
+			response.sendRedirect(mainURL);
+		}
+		
+	}
+
+	private boolean register(String log, String pass) {
+		Connection dataBase = null;
+		try {
+			Class.forName(driverURL).newInstance();
+		} catch (InstantiationException | IllegalAccessException
+				| ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			dataBase = DriverManager.getConnection(dataBaseURL, dataBaseLogin, dataBasePassword);
+			Statement stat = dataBase.createStatement();
+			ResultSet rs = stat.executeQuery(insertQuery(log,pass));
+			System.out.println("TU jest");
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	private boolean login(String log, String pass) {
+		Connection dataBase = null;
+		try {
+			try {
+				Class.forName(driverURL).newInstance();
+			} catch (InstantiationException | IllegalAccessException
+					| ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+			dataBase = DriverManager.getConnection(dataBaseURL,dataBaseLogin,dataBasePassword);
+			Statement stat = dataBase.createStatement();
+			ResultSet result = stat.executeQuery(selectQuery(log,pass));
+			if(!result.next()){
+				return false;
+			}
+			return true;
+		} catch (SQLException e) {
+			return false;
+		}
+	}
+	private boolean logout(){
+		
+		return true;
+	}
+	private String insertQuery(String login, String password){
+		return "INSERT INTO users(login,password) VALUES ('"+login+"','"+password+"');";
+	}
+	private String selectQuery(String login,String password){
+		return "SELECT * FROM users WHERE login ='"+login+"' AND password = '"+password+"');";
+	}
+
+}

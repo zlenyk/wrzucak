@@ -1,0 +1,10 @@
+public class Test {
+static class A<T extends Throwable> {
+A() throws T { System.out.print("A"); }
+} static class B
+extends A<Exception> {
+B() throws RuntimeException { System.out.print("B");
+}
+} public static void main(String[] args) throws Throwable {
+new B(); }
+}

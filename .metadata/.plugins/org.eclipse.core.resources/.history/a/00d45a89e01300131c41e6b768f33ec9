@@ -1,0 +1,15 @@
+import java.util.ArrayList;
+import java.util.Collection;
+public class Zadanie {
+public static void main(String[] args){
+Collection<Integer> c = new ArrayList<Integer>();
+for(int i = 99; i <= 102; i++){
+c.add(i);
+} for(Integer i
+:
+c){
+System.out.println("OK " + i);
+if(i.equals(100)) c.remove(i);
+}
+}
+}

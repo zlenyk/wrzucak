@@ -1,0 +1,7 @@
+public enum Zadanie implements Runnable {
+WHITE, BLACK, RED, YELLOW, BLUE;
+public void run() {System.out.println(this);}
+public static void main(String[] args) {
+for (Zadanie c : Zadanie.values()) new Thread(c).start();
+}
+}

@@ -1,0 +1,20 @@
+public enum Zadanie {
+	CZERWONY(false), ZIELONY(true), NIEBIESKI(true), CZARNY(false);
+	boolean ladny;
+
+	private Zadanie(boolean czyLadny) {
+		ladny = czyLadny;
+	}
+
+	@Override
+	public String toString() {
+		return super.toString().toLowerCase();
+	}
+
+	public static void main(String[] args) {
+		for (Zadanie kolor : Zadanie.values()) {
+			System.out.println("Kolor " + kolor + " jest "
+					+ (kolor.ladny ? "ladny" : "brzydki"));
+		}
+	}
+}

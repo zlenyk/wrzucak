@@ -1,0 +1,3 @@
+INDEX VERSION 1.126
+C:\Users\Comarch\Documents\GitHub\wrzucak\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2938873478.index
+\Shop\src

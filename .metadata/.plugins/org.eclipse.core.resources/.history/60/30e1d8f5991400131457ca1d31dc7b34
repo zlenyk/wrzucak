@@ -1,0 +1,110 @@
+package test;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+/**
+ * Servlet implementation class List
+ */
+@WebServlet("/List")
+public class List extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	private static final String mainURL = "http://localhost:8080/Shop/";
+	private static final String shopURL = "http://localhost:8080/Shop/List";
+	private static final String dataBaseURL = "jdbc:postgresql://127.0.0.1:5432/postgres";
+	private static final String dataBaseLogin = "postgres";
+	private static final String dataBasePassword = "postgres";
+	private static final String driverURL = "org.postgresql.Driver";   
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public List() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		generatePage(response,request);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		generatePage(response,request);
+	}
+	private void generatePage(HttpServletResponse response,HttpServletRequest request) throws IOException{
+		HttpSession session = request.getSession();
+		PrintWriter out = response.getWriter();
+
+		out.println("<html><head><title>Bookshop</title></head><body><h2>Bookshop</h2><form method='post' action='http://localhost:8080/Shop/Transaction'>");
+		out.println("<p>Witaj " + session.getAttribute("login") + "</p>");
+		try {
+			generateTable(out);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		out.println("<p>");
+		out.println("</form>");
+	}
+	
+	private void generateTable(PrintWriter out) throws SQLException{
+		out.println("<table border = '1'>");
+			out.println("<tr>");
+				out.println("<th></th>");
+				out.println("<th>Product</th>");
+				out.println("<th>Price</th>");
+			out.println("</tr>");
+		ResultSet set = listProducts();
+		while(set.next()){
+			out.println("<tr>");
+				generateProduct(out,set.getString("name"),set.getInt("price"));
+			out.println("</tr>");
+		}
+		out.println("</table>");
+	}
+	
+	private void generateProduct(PrintWriter out,String name,int price){
+		out.println("<td><input type='submit' name='zamow' value="
+		         + "'zamow' />" + "</td>"
+		         +"<td>"+ name + "</td>"
+		         +"<td>"+ price + " $" + "</td>");
+	}
+	
+	private ResultSet listProducts(){
+		Connection dataBase = null;
+		try {
+			Class.forName(driverURL).newInstance();
+		} catch (InstantiationException | IllegalAccessException
+				| ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		try {
+			dataBase = DriverManager.getConnection(dataBaseURL, dataBaseLogin, dataBasePassword);
+			Statement stat = dataBase.createStatement();
+			return stat.executeQuery(productsQuery());
+		}catch (SQLException e) {
+			return null;
+		}
+	}
+	private String productsQuery(){
+		return "SELECT * FROM products;";
+		
+	}
+}

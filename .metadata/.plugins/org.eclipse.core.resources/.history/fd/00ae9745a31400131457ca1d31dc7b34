@@ -1,0 +1,62 @@
+package test;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.ResultSet;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+/**
+ * Servlet implementation class Transaction
+ */
+@WebServlet("/Transaction")
+public class Transaction extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public Transaction() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		PrintWriter out = response.getWriter();
+		
+		String login = session.getAttribute("login").toString();
+		String password = session.getAttribute("password").toString();
+		generatePage(out,login,password);
+	}
+
+	private void generatePage(PrintWriter out, String login,String password) {
+		out.println("<html><head><title>Bookshop</title></head><body><h2>Bookshop</h2>");
+		out.println("<p>Hej " + login + "</p>");
+		
+		
+		String name;
+		String price;
+		out.println("<script>");
+			
+		out.println("</script>");
+		out.println("<p>Czy na pewno chcesz kupiæ " + name + " za " + price + "</p>");
+		
+	}
+
+}

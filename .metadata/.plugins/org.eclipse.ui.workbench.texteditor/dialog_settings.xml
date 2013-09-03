@@ -13,15 +13,15 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="Serwer" key="selection"/>
+		<item value="Client" key="selection"/>
 		<list key="findhistory">
-			<item value="ChatServer"/>
 			<item value="ChatClient"/>
+			<item value="ChatServer"/>
 			<item value="ClientImpl"/>
 		</list>
 		<list key="replacehistory">
-			<item value="Serwer"/>
 			<item value="Client"/>
+			<item value="Serwer"/>
 		</list>
 	</section>
 </section>
