@@ -1,0 +1,2 @@
+D:\Zygmunt\TCS\Sieci\Wrzucacz\WrzucakClient\WrzucaczClient\obj\x86\Debug\WrzucaczClient.exe
+D:\Zygmunt\TCS\Sieci\Wrzucacz\WrzucakClient\WrzucaczClient\obj\x86\Debug\WrzucaczClient.pdb

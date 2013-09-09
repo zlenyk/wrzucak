@@ -1,0 +1,9 @@
+D:\Zygmunt\TCS\Sieci\Wrzucacz\WrzucaczMainHost1\WrzucaczMainHost1\bin\Debug\WrzucaczMainHost1.exe
+D:\Zygmunt\TCS\Sieci\Wrzucacz\WrzucaczMainHost1\WrzucaczMainHost1\bin\Debug\WrzucaczMainHost1.pdb
+D:\Zygmunt\TCS\Sieci\Wrzucacz\WrzucaczMainHost1\WrzucaczMainHost1\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Zygmunt\TCS\Sieci\Wrzucacz\WrzucaczMainHost1\WrzucaczMainHost1\obj\x86\Debug\WrzucaczMainHost.Form1.resources
+D:\Zygmunt\TCS\Sieci\Wrzucacz\WrzucaczMainHost1\WrzucaczMainHost1\obj\x86\Debug\WrzucaczMainHost.Properties.Resources.resources
+D:\Zygmunt\TCS\Sieci\Wrzucacz\WrzucaczMainHost1\WrzucaczMainHost1\obj\x86\Debug\GenerateResource.read.1.tlog
+D:\Zygmunt\TCS\Sieci\Wrzucacz\WrzucaczMainHost1\WrzucaczMainHost1\obj\x86\Debug\GenerateResource.write.1.tlog
+D:\Zygmunt\TCS\Sieci\Wrzucacz\WrzucaczMainHost1\WrzucaczMainHost1\obj\x86\Debug\WrzucaczMainHost1.exe
+D:\Zygmunt\TCS\Sieci\Wrzucacz\WrzucaczMainHost1\WrzucaczMainHost1\obj\x86\Debug\WrzucaczMainHost1.pdb

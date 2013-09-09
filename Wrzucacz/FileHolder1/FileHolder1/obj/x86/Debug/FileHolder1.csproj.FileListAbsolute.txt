@@ -1,0 +1,9 @@
+D:\Zygmunt\TCS\Sieci\Wrzucacz\FileHolder1\FileHolder1\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Zygmunt\TCS\Sieci\Wrzucacz\FileHolder1\FileHolder1\obj\x86\Debug\FileHolder1.Form1.resources
+D:\Zygmunt\TCS\Sieci\Wrzucacz\FileHolder1\FileHolder1\obj\x86\Debug\FileHolder1.Properties.Resources.resources
+D:\Zygmunt\TCS\Sieci\Wrzucacz\FileHolder1\FileHolder1\obj\x86\Debug\GenerateResource.read.1.tlog
+D:\Zygmunt\TCS\Sieci\Wrzucacz\FileHolder1\FileHolder1\obj\x86\Debug\GenerateResource.write.1.tlog
+D:\Zygmunt\TCS\Sieci\Wrzucacz\FileHolder1\FileHolder1\bin\Debug\FileHolder1.exe
+D:\Zygmunt\TCS\Sieci\Wrzucacz\FileHolder1\FileHolder1\bin\Debug\FileHolder1.pdb
+D:\Zygmunt\TCS\Sieci\Wrzucacz\FileHolder1\FileHolder1\obj\x86\Debug\FileHolder1.exe
+D:\Zygmunt\TCS\Sieci\Wrzucacz\FileHolder1\FileHolder1\obj\x86\Debug\FileHolder1.pdb

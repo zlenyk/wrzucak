@@ -1,0 +1,23 @@
+Zad 2.
+Sklep kazdemu klientowi który sie pomyslnie zaloguje daje ciastko (cookie) w którym trzyma jego nazwe wyswietlana.
+Robi to poleceniem "set cookie"
+Klient wchodzac na kolejne strony na serwerze caly czas ma ustawiony naglówek cookie, który mówi serwerowi kim on jest.
+Podobnie sprawa wyglada z dodawaniem zakupów do koszyka. Gdy klient chce to zrobic, dostaje ciasteczko, w którym sa 
+zakodowane przedmioty, które zamówil oraz ich laczna cena.
+
+w takim poleceniu:
+
+POST /cgi-bin/store.cgi?action=login HTTP/1.1
+
+w którym wpisujemy takze nasz login i haslo, serwer zwraca:
+
+HTTP/1.1 200 OK
+
+i w jednym z naglówków ma:
+
+Set-Cookie: SSOid=enlnbXVudGxlbnlrQG9wLnBsOjcwYjY0YjhmMTcwMmFjNzg4ZTE5ZDZiZDZiYmMxMjJhOlp5Z211%0AbnQ6VQ%3D%3D%0A; path=/
+
+
+potem klient gdy wchodzi na kolejne strony ma naglówek:
+
+Cookie: SSOid=enlnbXVudGxlbnlrQG9wLnBsOjcwYjY0YjhmMTcwMmFjNzg4ZTE5ZDZiZDZiYmMxMjJhOlp5Z211%0AbnQ6VQ%3D%3D%0A
