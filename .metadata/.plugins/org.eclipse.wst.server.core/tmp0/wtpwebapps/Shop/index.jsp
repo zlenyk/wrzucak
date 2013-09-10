@@ -14,11 +14,7 @@
     <input type="hidden" name ="action" value = "login" />
     <input type="submit" value="Login" />
   </form>
-  <form method="POST" action="http://localhost:8080/Shop/Login">
-    Register:<br /><br />
-    <input type="text" name="login" />
-    <input type="text" name="password" />
-    <input type="hidden" name ="action" value = "register" />
+  <form method="POST" action="http://localhost:8080/Shop/registration.jsp">
     <input type="submit" value="Register" />
   </form>
 </body>
