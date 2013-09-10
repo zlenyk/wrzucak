@@ -1,0 +1,16 @@
+package cont;
+
+/**
+ * @author LEZY
+ *
+ */
+public class LoginProtocole {
+
+	LoginProtocole(){}
+	
+	
+	public static String login(String login, String password){
+		ConnectionManager cm = new 
+		
+	}
+}

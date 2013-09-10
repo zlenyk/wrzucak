@@ -1,7 +1,0 @@
-class A<T> { T id(T t) { return t; } }
-public class Zadanie {
-public static void main(String[] args) {
-	A<? super Integer> c = new A<Integer>(); Object k = c.id(7);
-	System.out.println(i);
-}
-}

@@ -1,7 +1,0 @@
-class B {}
-class A<T extends B> {
-public static void main(String[] args) {
-A<B> ab = new A<B>();
-System.out.println(ab.getClass());
-}
-}

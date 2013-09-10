@@ -1,0 +1,7 @@
+package cont;
+
+public class RequestLogic {
+	
+	private static final LOGIN = 1;
+	
+}

@@ -1,0 +1,85 @@
+package cont;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.Socket;
+
+public class ConnectionManager {
+
+	private static final String[] hostsURLs = {"127.0.0.1","127.0.0.1","127.0.0.1"};
+	private static final Integer port = 12345;
+	private OutputStream toHost = null;
+	private Socket clientSocket = null;
+	BufferedReader stdin = null;
+	private InputStream fromHost = null;
+
+	
+	/**
+	 * @
+	 * @param number if which host to use
+	 * @return if operation was successful
+	 */
+	public boolean connectToHost(int number){
+		try {
+			clientSocket = new Socket(hostsURLs[number],port);
+		} catch (IOException e) {
+			try {
+				closeAll();
+			} catch (IOException e1){e1.printStackTrace();}
+			e.printStackTrace();
+			return false;
+		}
+		try {
+			stdin = new BufferedReader(new InputStreamReader(System.in));
+			fromHost = clientSocket.getInputStream();
+			toHost = clientSocket.getOutputStream();
+		} catch (IOException e) {
+			try {
+				closeAll();
+			} catch (IOException e1) {e1.printStackTrace();}
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean write(String message){
+		try {
+			toHost.write(message.getBytes());
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+	public String read() throws IOException {
+		String linia = "";
+		int c;
+		while ((c = fromHost.read()) != '\n') {
+			linia = linia + (char) c;
+		}
+		
+		return linia;
+	}
+	private void closeAll() throws IOException{
+		if(toHost != null){
+			toHost.close();
+			toHost = null;
+		}
+		if(fromHost != null){
+			fromHost.close();
+			fromHost = null;
+		}
+		if(stdin != null){
+			stdin.close();
+			stdin = null;
+		}
+		if(clientSocket != null){
+			clientSocket.close();
+			clientSocket = null;
+		}
+
+		
+	}
+}

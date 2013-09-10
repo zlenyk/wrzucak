@@ -1,0 +1,32 @@
+package cont;
+
+/**
+ * @author LEZY
+ *
+ */
+public class LoginProtocole {
+
+	LoginProtocole(){}
+	
+	
+	/**
+	 * @param login
+	 * @param password
+	 * @return sessionID
+	 */
+	public String login(String login, String password){
+		ConnectionManager cm = new ConnectionManager();
+		int NOThostNr = whichHostNotUse(login);
+		boolean connectionSuccess = false;
+		
+		if()
+	}
+	
+	private int whichHostNotUse(String login){
+		int result = 0;
+		
+		return result;
+	}
+}
+
+

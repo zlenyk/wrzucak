@@ -1,0 +1,44 @@
+package cont;
+
+/**
+ * @author LEZY
+ *
+ */
+public class LoginProtocole {
+
+	private static final String NOCONNECTION = "UNSUCCESSFUL CONNECTION";
+	LoginProtocole(){}
+	
+	
+	/**
+	 * @param login
+	 * @param password
+	 * @return sessionID or 
+	 */
+	public String login(String login, String password){
+		ConnectionManager cm = new ConnectionManager();
+		
+		if(tryToConnect(login,cm) == false){
+			return NOCONNECTION;
+		}
+		
+		return "";
+	}
+	
+	public boolean tryToConnect(String login,ConnectionManager cm){
+		int NOThostNr = whichHostNotUse(login);
+		if(cm.connectToHost(++NOThostNr)){
+			return true;
+		}
+		else{
+			return cm.connectToHost(++NOThostNr);
+		}
+	}
+	private int whichHostNotUse(String login){
+		int result = 0;
+		
+		return result;
+	}
+}
+
+

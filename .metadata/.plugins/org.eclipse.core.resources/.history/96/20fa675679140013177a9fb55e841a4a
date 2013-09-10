@@ -1,9 +1,0 @@
-class B {
-}
-
-class Zadanie<T extends B> {
-	public static void main(String[] args) {
-		Zadanie<B> ab = new Zadanie<B>();
-		System.out.println(ab.getClass());
-	}
-}

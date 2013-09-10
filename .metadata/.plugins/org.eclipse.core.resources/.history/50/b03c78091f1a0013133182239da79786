@@ -1,0 +1,56 @@
+package cont;
+
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+public class RequestLogic {
+	
+	private static final Integer LOGIN = 1;
+	private static final Integer REGISTRATION = 2;
+	private ConnectionManager connectionManager;
+	
+	RequestLogic(){
+		connectionManager = new ConnectionManager();
+	}
+	
+	public static boolean acceptRequest(String ... args){
+		
+		int requestNr = Integer.parseInt(args[0]);
+		if(requestNr == LOGIN){
+			boolean result = login(args[1],args[2]);
+		}
+		else if(requestNr == REGISTRATION){
+			boolean result = register(args[1],args[2]);
+		}
+		return true;
+	}
+
+	private static boolean register(String string, String string2) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	private static boolean login(String login, String password) {
+		
+		
+		return false;
+	}
+
+	private int whichHostNotUse(String login){
+		int result = 0;
+		
+		return result;
+	}
+	private String hashString(String mes){
+		MessageDigest md5;
+		try {
+			md5 = MessageDigest.getInstance("MD5");
+		} catch (NoSuchAlgorithmException e) {
+			return null; //nie powinna zdarzyæ sie ta sytuacja.
+			e.printStackTrace();
+		}
+		md5.update(mes.getBytes());
+		return (new BigInteger(1,md5.digest())).toString(16);
+	}
+}

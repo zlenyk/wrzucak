@@ -1,0 +1,68 @@
+package view;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Label;
+
+public class MainWindow {
+
+	protected Shell shlWrzucak;
+	private Text text;
+	private Text text_1;
+	private Label lblPassword;
+
+	/**
+	 * Launch the application.
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		try {
+			MainWindow window = new MainWindow();
+			window.open();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Open the window.
+	 */
+	public void open() {
+		Display display = Display.getDefault();
+		createContents();
+		shlWrzucak.open();
+		shlWrzucak.layout();
+		while (!shlWrzucak.isDisposed()) {
+			if (!display.readAndDispatch()) {
+				display.sleep();
+			}
+		}
+	}
+
+	/**
+	 * Create contents of the window.
+	 */
+	protected void createContents() {
+		shlWrzucak = new Shell();
+		shlWrzucak.setSize(450, 300);
+		shlWrzucak.setText("Wrzucak");
+		
+		text = new Text(shlWrzucak, SWT.BORDER);
+		text.setBounds(73, 48, 132, 21);
+		
+		Label lblNewLabel = new Label(shlWrzucak, SWT.NONE);
+		lblNewLabel.setBounds(10, 24, 41, 15);
+		lblNewLabel.setText("Login");
+		
+		text_1 = new Text(shlWrzucak, SWT.BORDER);
+		text_1.setBounds(73, 21, 132, 21);
+		text_1.setEchoChar('*');
+		
+		lblPassword = new Label(shlWrzucak, SWT.NONE);
+		lblPassword.setBounds(10, 51, 55, 15);
+		lblPassword.setText("Password");
+
+	}
+}

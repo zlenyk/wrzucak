@@ -30,4 +30,12 @@
 <fullyQualifiedTypeName name="java.lang.String"/>
 <fullyQualifiedTypeName name="java.sql.ResultSet"/>
 <fullyQualifiedTypeName name="test.Login.DatabaseManager"/>
+<fullyQualifiedTypeName name="view.MainWindow"/>
+<fullyQualifiedTypeName name="java.io.InputStream"/>
+<fullyQualifiedTypeName name="java.security.MessageDigest"/>
+<fullyQualifiedTypeName name="cont.LoginProtocole.RequestCode"/>
+<fullyQualifiedTypeName name="cont.ConnectionManager.MessageManager"/>
+<fullyQualifiedTypeName name="cont.LoginProtocole.ResponseCode"/>
+<fullyQualifiedTypeName name="cont.RequestLogic"/>
+<fullyQualifiedTypeName name="cont.LoginProtocole"/>
 </qualifiedTypeNameHistroy>
