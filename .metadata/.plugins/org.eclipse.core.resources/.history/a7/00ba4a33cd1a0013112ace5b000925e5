@@ -1,0 +1,18 @@
+package cont;
+
+import java.nio.ByteBuffer;
+import java.nio.channels.ServerSocketChannel;
+
+public class ConnectionManager {
+
+	ServerSocketChannel channel;
+	ByteBuffer std;
+	
+	private static int getPort(){
+		return 12345;
+	}
+	
+	ConnectionManager(){
+		
+	}
+}

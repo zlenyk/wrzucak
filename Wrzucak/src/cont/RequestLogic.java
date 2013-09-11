@@ -2,6 +2,8 @@ package cont;
 
 import java.io.IOException;
 
+import view.MyFrame;
+
 
 public class RequestLogic {
 	
@@ -13,31 +15,29 @@ public class RequestLogic {
 		return new RequestLogic();
 	}
 	
-	public static boolean acceptRequest(int request,String ... args){
+	public static void acceptRequest(MyFrame mf,int request,String ... args){
 		
-		boolean result = false;
-		if(request == LOGIN){
-			try {
+		String result = "";
+		try{
+			if(request == LOGIN){
 				result = login(args[0],args[1]);
-			} catch (IOException e) {
-				e.printStackTrace();
-				return false;
 			}
+			else if(request == REGISTRATION){
+				result = register(args[0],args[1]);
+			}
+		}catch (IOException e) {
+			e.printStackTrace();
 		}
-		else if(request == REGISTRATION){
-			result = register(args[1],args[2]);
-		}
-		return result;
+		GUIManager.informUser(mf, request, result);
 	}
 
-	private static boolean register(String string, String string2) {
-		// TODO Auto-generated method stub
-		return false;
+	private static String register(String login, String password) throws IOException {
+		RegistrationProtocole rp = new RegistrationProtocole();
+		return rp.start(login, password);
 	}
 
-	private static boolean login(String login, String password) throws IOException {
+	private static String login(String login, String password) throws IOException {
 		LoginProtocole lp = new LoginProtocole();
-		lp.start(login, password);
-		return false;
+		return lp.start(login, password);
 	}
 }

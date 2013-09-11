@@ -1,0 +1,44 @@
+package cont;
+
+import java.io.IOException;
+
+
+public class RequestLogic {
+	
+	private static final Integer LOGIN = 1;
+	private static final Integer REGISTRATION = 2;
+	
+	private RequestLogic(){}
+	public static RequestLogic getInstance(){
+		return new RequestLogic();
+	}
+	
+	public static boolean acceptRequest(int request,String ... args){
+		
+		boolean result = false;
+		try{
+			if(request == LOGIN){
+				result = login(args[0],args[1]);
+			}
+			else if(request == REGISTRATION){
+				result = register(args[1],args[2]);
+			}
+		}catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return result;
+	}
+
+	private static boolean register(String login, String password) throws IOException {
+		RegistrationProtocole rp = new RegistrationProtocole();
+		rp.start(login, password);
+		return false;
+	}
+
+	private static boolean login(String login, String password) throws IOException {
+		LoginProtocole lp = new LoginProtocole();
+		lp.start(login, password);
+		return false;
+	}
+}

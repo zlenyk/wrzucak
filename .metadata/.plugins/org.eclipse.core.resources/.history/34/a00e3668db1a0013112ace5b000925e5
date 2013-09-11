@@ -1,0 +1,43 @@
+package cont;
+
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
+
+public class ConnectionManager {
+
+	ServerSocketChannel channel;
+	ByteBuffer std;
+	
+	private static int getPort(){
+		return 12345;
+	}
+	
+	ConnectionManager(){}
+	
+	private void sendBuffer(SocketChannel socket){
+		
+		while(std.hasRemaining()){
+			try {
+				socket.write(std);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		std.flip();
+		std.clear();
+	}
+	private void putStringIntoBuffer(String s){
+		std.clear();
+		std.put(s.getBytes());
+		std.flip();
+	}
+	
+	public void sendMessage(String message,SocketChannel socket){
+		putStringIntoBuffer(message);
+		sendBuffer(socket);
+	}
+	
+}

@@ -7,18 +7,19 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import cont.RequestLogic;
 
-public class MainWindow {
+public class MainWindow implements MyFrame{
 	
 	private static final Integer LOGIN = 1;
-	//private static final Integer REGISTRATION = 2;
 	private JFrame frmWrzucak;
 	private JTextField textField;
 	private JPasswordField passwordField;
+	private MainWindow mw;
 	/**
 	 * Launch the application.
 	 */
@@ -39,6 +40,7 @@ public class MainWindow {
 	 * Create the application.
 	 */
 	public MainWindow() {
+		mw = this;
 		initialize();
 	}
 
@@ -72,7 +74,7 @@ public class MainWindow {
 		JButton btnZaloguj = new JButton("Zaloguj");
 		btnZaloguj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				RequestLogic.acceptRequest(LOGIN,textField.getText(),new String(passwordField.getPassword()));
+				RequestLogic.acceptRequest(mw,LOGIN,textField.getText(),new String(passwordField.getPassword()));
 			}
 		});
 		btnZaloguj.setBounds(10, 76, 89, 23);
@@ -88,5 +90,11 @@ public class MainWindow {
 		});
 		btnRejestracja.setBounds(56, 120, 89, 23);
 		frmWrzucak.getContentPane().add(btnRejestracja);
+	}
+
+	@Override
+	public String displayMessage(String message) {
+		JOptionPane.showMessageDialog(null, message, "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
+		return null;
 	}
 }

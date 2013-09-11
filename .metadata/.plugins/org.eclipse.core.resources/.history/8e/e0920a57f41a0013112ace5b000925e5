@@ -1,0 +1,39 @@
+package cont;
+
+import java.nio.channels.SocketChannel;
+
+import cont.ConnectionManager.MessageManager;
+
+public class ClientRequest implements Runnable {
+	
+	private enum MessageCode{
+		OK,WRONG,ERROR;
+	}
+	
+	private static final String LOGIN = "LOG";
+	private static final String REGISTER = "REG";
+	ConnectionManager cm;
+	SocketChannel socket;
+	ClientRequest(SocketChannel s){
+		socket = s;
+		cm = new ConnectionManager(socket);
+	}
+
+
+	@Override
+	public void run() {
+		while(true){
+			String[] response = MessageManager.decodeResponse(cm.readMessage());
+			if(response[0] == LOGIN){
+				String login = response[1];
+				String hashPassword = response[2];
+			}
+			else if(response[0] == REGISTER){
+				String login = response[1];
+				String hashPassword = response[2];
+				boolean result = DatabaseManager.register(login, password)
+			}
+		}
+	}
+
+}

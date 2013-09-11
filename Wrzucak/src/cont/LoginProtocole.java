@@ -10,7 +10,7 @@ import cont.ConnectionManager.MessageManager;
  */
 public class LoginProtocole {
 
-	private static final String LOGINCODE = "LOGIN";
+	private static final String LOGINCODE = "LOG";
 	ConnectionManager cm;
 
 	private enum ResponseCode{
@@ -30,15 +30,15 @@ public class LoginProtocole {
 	 */
 	public String start(String login, String password) throws IOException{
 		
-		if(tryToConnect(login,cm) == false){
+		if(cm.tryToConnect(login) == false){
 			return ResponseCode.ERROR.name();
 		}
 		
-		String message = MessageManager.buildMessage(LOGINCODE,login,MessageManager.hashString(password));
+		String message = MessageManager.buildMessage(LOGINCODE,MessageManager.fillLogin(login),MessageManager.hashString(password));
 		cm.write(message);
 		String[] response = MessageManager.decodeResponse(cm.read());
 		
-		if(response[0] == ResponseCode.OK.name()){
+		if(response[0].equals(ResponseCode.OK.name())){
 			return response[1];
 		}
 		else {
@@ -46,16 +46,6 @@ public class LoginProtocole {
 		}
 	}
 	
-	
-	public boolean tryToConnect(String login,ConnectionManager cm){
-		int NOThostNr = MessageManager.whichHostNotUse(login);
-		if(cm.connectToHost(++NOThostNr)){
-			return true;
-		}
-		else{
-			return cm.connectToHost(++NOThostNr);
-		}
-	}
 }
 
 

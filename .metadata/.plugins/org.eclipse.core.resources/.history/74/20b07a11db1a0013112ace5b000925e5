@@ -1,0 +1,14 @@
+package cont;
+
+import java.nio.channels.SocketChannel;
+
+public class ClientRequest implements Runnable {
+
+	ClientRequest(SocketChannel socket){}
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

@@ -5,28 +5,34 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
-public class RegistrationWindow extends JFrame {
+import cont.RequestLogic;
+
+public class RegistrationWindow extends JFrame implements MyFrame {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private static final Integer REGISTRATION = 2;
 	JFrame parent;
 	private JPanel contentPane;
+	private RegistrationWindow rw;
 
-	private JFrame frame;
 	private JTextField textField;
-	private JTextField textField_1;
+	private JPasswordField passwordField;
+
 	/**
 	 * Create the frame.
 	 */
 	public RegistrationWindow(JFrame window) {
-		frame = this;
+		rw = this;
 		parent = window;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 202, 224);
@@ -38,7 +44,8 @@ public class RegistrationWindow extends JFrame {
 		JButton btnNewButton = new JButton("Register");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame.setVisible(false);
+				RequestLogic.acceptRequest(rw,REGISTRATION,textField.getText(),new String(passwordField.getPassword()));
+				rw.setVisible(false);
 				parent.setVisible(true);
 			}
 		});
@@ -50,11 +57,6 @@ public class RegistrationWindow extends JFrame {
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(66, 62, 86, 20);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
-		
 		JLabel lblNewLabel = new JLabel("Login");
 		lblNewLabel.setBounds(10, 34, 46, 14);
 		contentPane.add(lblNewLabel);
@@ -62,6 +64,14 @@ public class RegistrationWindow extends JFrame {
 		JLabel lblNewLabel_1 = new JLabel("Password");
 		lblNewLabel_1.setBounds(10, 65, 46, 14);
 		contentPane.add(lblNewLabel_1);
+		
+		passwordField = new JPasswordField();
+		passwordField.setBounds(66, 62, 86, 20);
+		contentPane.add(passwordField);
 	}
-
+	@Override
+	public String displayMessage(String message) {
+		JOptionPane.showMessageDialog(null, message, "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
+		return null;
+	}
 }

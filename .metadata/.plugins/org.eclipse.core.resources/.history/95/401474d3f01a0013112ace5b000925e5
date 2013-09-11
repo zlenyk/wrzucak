@@ -1,0 +1,19 @@
+package cont;
+
+import java.nio.channels.SocketChannel;
+
+public class ClientRequest implements Runnable {
+
+	ConnectionManager cm;
+	
+	ClientRequest(SocketChannel socket){
+		cm = new ConnectionManager();
+	}
+	@Override
+	public void run() {
+		while(true){
+			
+		}
+	}
+
+}

@@ -1,0 +1,7 @@
+package cont;
+
+public class RegistrationProtocole {
+
+	private static final String REGISTERCODE = "REGISTER";
+	ConnectionManager cm;
+}

@@ -34,8 +34,14 @@
 <fullyQualifiedTypeName name="java.io.InputStream"/>
 <fullyQualifiedTypeName name="java.security.MessageDigest"/>
 <fullyQualifiedTypeName name="cont.LoginProtocole.RequestCode"/>
-<fullyQualifiedTypeName name="cont.ConnectionManager.MessageManager"/>
 <fullyQualifiedTypeName name="cont.LoginProtocole.ResponseCode"/>
 <fullyQualifiedTypeName name="cont.RequestLogic"/>
 <fullyQualifiedTypeName name="cont.LoginProtocole"/>
+<fullyQualifiedTypeName name="cont.ConnectionManager"/>
+<fullyQualifiedTypeName name="cont.RegistrationProtocole.ResponseCode"/>
+<fullyQualifiedTypeName name="cont.RegistrationProtocole"/>
+<fullyQualifiedTypeName name="javax.swing.JFrame"/>
+<fullyQualifiedTypeName name="view.MyFrame"/>
+<fullyQualifiedTypeName name="cont.ConnectionManager.MessageManager"/>
+<fullyQualifiedTypeName name="cont.DatabaseManager"/>
 </qualifiedTypeNameHistroy>
