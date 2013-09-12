@@ -2,5 +2,6 @@ package view;
 
 public interface MyFrame {
 
-	String displayMessage(String message);
+	void displayMessage(String message);
+	void showUserWindow(String sessionID,String login);
 }

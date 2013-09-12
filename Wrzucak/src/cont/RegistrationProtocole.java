@@ -29,11 +29,11 @@ public class RegistrationProtocole {
 			return ResponseCode.ERROR.name();
 		}
 		
-		String message = MessageManager.buildMessage(REGISTERCODE,login,MessageManager.hashString(password));
+		String message = MessageManager.buildMessage(REGISTERCODE,MessageManager.fillLogin(login),MessageManager.hashString(password));
 		cm.write(message);
 		
 		String[] response = MessageManager.decodeResponse(cm.read());
-		System.out.println("JETS");
+		System.out.println(response[0]);
 		return response[0];
 
 	}

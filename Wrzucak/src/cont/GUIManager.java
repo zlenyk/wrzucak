@@ -9,10 +9,10 @@ public class GUIManager {
 	
 	public static void informUser(MyFrame mf,Integer request,String info){
 		if(request == LOGIN){
-			if(info == "OK"){
+			if(info.equals("OK")){
 				mf.displayMessage("Logowanie udane");
 			}
-			else if(info == "WRONG"){
+			else if(info.equals("WRONG")){
 				mf.displayMessage("B³êdny login lub has³o");
 			}
 			else{
@@ -20,15 +20,19 @@ public class GUIManager {
 			}
 		}
 		else if(request == REGISTER){
-			if(info == "OK"){
+			if(info.equals("OK")){
 				mf.displayMessage("Rejestracja udana");
 			}
-			else if(info == "WRONG"){
+			else if(info.equals("WRONG")){
 				mf.displayMessage("Login zajêty");
 			}
 			else{
 				mf.displayMessage("B³¹d serwera");
 			}
 		}
+	}
+
+	public static void showUserWindow(MyFrame mf,String sessionID,String login) {
+		mf.showUserWindow(sessionID,login);
 	}
 }

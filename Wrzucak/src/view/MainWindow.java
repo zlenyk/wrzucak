@@ -92,9 +92,14 @@ public class MainWindow implements MyFrame{
 		frmWrzucak.getContentPane().add(btnRejestracja);
 	}
 
+	public void showUserWindow(String sessionID,String login){
+		UserWindow uw = new UserWindow(sessionID,login,frmWrzucak);
+		frmWrzucak.setVisible(false);
+		uw.setVisible(true);
+		
+	}
 	@Override
-	public String displayMessage(String message) {
+	public void displayMessage(String message) {
 		JOptionPane.showMessageDialog(null, message, "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
-		return null;
 	}
 }

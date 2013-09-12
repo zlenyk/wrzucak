@@ -1,0 +1,59 @@
+package cont;
+
+import java.nio.channels.SocketChannel;
+
+import cont.ConnectionManager.MessageManager;
+
+public class ClientRequest implements Runnable {
+	
+	private enum MessageCode{
+		OK,WRONG,ERROR;
+	}
+	
+	private static final String LOGIN = "LOG";
+	private static final String REGISTER = "REG";
+	ConnectionManager cm;
+	SocketChannel socket;
+	ClientRequest(SocketChannel s){
+		socket = s;
+		cm = new ConnectionManager(socket);
+	}
+
+
+	@Override
+	public void run() {
+		while(true){
+			String[] response = MessageManager.decodeResponse(cm.readMessage());
+			String login;
+			String hashPassword;
+			if(response[0].equals(LOGIN)){
+				login = response[1];
+				hashPassword = response[2];
+				if( DatabaseManager.checkLogin(login, hashPassword)){
+					String sessionId = makeNewSessionID(login);
+				}
+			}
+			else if(response[0].equals(REGISTER)){
+				login = response[1];
+				hashPassword = response[2];
+				if( DatabaseManager.register(login, hashPassword)){
+					cm.sendMessage(MessageCode.OK.name());
+				}
+				else{
+					cm.sendMessage(MessageCode.WRONG.name());
+				}
+			}
+			break;
+		}
+	}
+
+
+	private String makeNewSessionID(String login) {
+		String id = "";
+		int rand1 = (int)(Math.random() * (1000000 + 1));
+		id += new Integer(rand1).toString();
+		id += login;
+		return id;
+	}
+
+}

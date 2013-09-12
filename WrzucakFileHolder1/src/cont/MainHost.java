@@ -4,17 +4,21 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class MainHost implements Runnable {
 
 	ServerSocketChannel channel;
+	Map <String,String> sessionSet;
 	
 	private static int getPort(){
 		return 12345;
 	}
 	
 	public MainHost(){
+		sessionSet = new HashMap<String,String>();
 		try {
 			channel = ServerSocketChannel.open();
 			channel.socket().bind(new InetSocketAddress(getPort()));
@@ -33,7 +37,7 @@ public class MainHost implements Runnable {
 			try{
 				SocketChannel socket = channel.accept();
 				System.out.println("Jest klient.");
-				new Thread(new ClientRequest(socket)).start();
+				new Thread(new ClientRequest(socket,sessionSet)).start();
 				
 			}catch (IOException e) {
 				e.printStackTrace();

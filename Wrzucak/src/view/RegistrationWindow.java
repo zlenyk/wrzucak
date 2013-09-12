@@ -21,7 +21,7 @@ public class RegistrationWindow extends JFrame implements MyFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private static final Integer REGISTRATION = 2;
-	JFrame parent;
+	private JFrame parent;
 	private JPanel contentPane;
 	private RegistrationWindow rw;
 
@@ -70,8 +70,10 @@ public class RegistrationWindow extends JFrame implements MyFrame {
 		contentPane.add(passwordField);
 	}
 	@Override
-	public String displayMessage(String message) {
+	public void displayMessage(String message) {
 		JOptionPane.showMessageDialog(null, message, "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
-		return null;
+	}
+	@Override
+	public void showUserWindow(String sessionID,String login) {
 	}
 }

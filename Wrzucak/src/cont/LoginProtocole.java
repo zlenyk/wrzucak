@@ -25,7 +25,7 @@ public class LoginProtocole {
 	/**
 	 * @param login
 	 * @param password
-	 * @return sessionID or 
+	 * @return sessionID or error message
 	 * @throws IOException in case of connection error
 	 */
 	public String start(String login, String password) throws IOException{

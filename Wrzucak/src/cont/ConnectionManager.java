@@ -10,8 +10,6 @@ import java.net.Socket;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import view.MyFrame;
-
 public class ConnectionManager {
 
 	private static final String[] hostsURLs = {"127.0.0.1","127.0.0.1","127.0.0.1"};

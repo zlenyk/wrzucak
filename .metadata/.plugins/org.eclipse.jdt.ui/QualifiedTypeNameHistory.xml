@@ -27,7 +27,6 @@
 <fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="javax.servlet.http.HttpSession"/>
-<fullyQualifiedTypeName name="java.lang.String"/>
 <fullyQualifiedTypeName name="java.sql.ResultSet"/>
 <fullyQualifiedTypeName name="test.Login.DatabaseManager"/>
 <fullyQualifiedTypeName name="view.MainWindow"/>
@@ -35,13 +34,16 @@
 <fullyQualifiedTypeName name="java.security.MessageDigest"/>
 <fullyQualifiedTypeName name="cont.LoginProtocole.RequestCode"/>
 <fullyQualifiedTypeName name="cont.LoginProtocole.ResponseCode"/>
-<fullyQualifiedTypeName name="cont.RequestLogic"/>
 <fullyQualifiedTypeName name="cont.LoginProtocole"/>
 <fullyQualifiedTypeName name="cont.ConnectionManager"/>
 <fullyQualifiedTypeName name="cont.RegistrationProtocole.ResponseCode"/>
 <fullyQualifiedTypeName name="cont.RegistrationProtocole"/>
 <fullyQualifiedTypeName name="javax.swing.JFrame"/>
 <fullyQualifiedTypeName name="view.MyFrame"/>
-<fullyQualifiedTypeName name="cont.ConnectionManager.MessageManager"/>
 <fullyQualifiedTypeName name="cont.DatabaseManager"/>
+<fullyQualifiedTypeName name="java.lang.String"/>
+<fullyQualifiedTypeName name="cont.ConnectionManager.MessageManager"/>
+<fullyQualifiedTypeName name="cont.GUIManager"/>
+<fullyQualifiedTypeName name="java.nio.channels.AcceptPendingException"/>
+<fullyQualifiedTypeName name="cont.RequestLogic"/>
 </qualifiedTypeNameHistroy>
