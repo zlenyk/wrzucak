@@ -35,7 +35,6 @@
 <fullyQualifiedTypeName name="cont.LoginProtocole.RequestCode"/>
 <fullyQualifiedTypeName name="cont.LoginProtocole.ResponseCode"/>
 <fullyQualifiedTypeName name="cont.LoginProtocole"/>
-<fullyQualifiedTypeName name="cont.ConnectionManager"/>
 <fullyQualifiedTypeName name="cont.RegistrationProtocole.ResponseCode"/>
 <fullyQualifiedTypeName name="cont.RegistrationProtocole"/>
 <fullyQualifiedTypeName name="javax.swing.JFrame"/>
@@ -46,4 +45,9 @@
 <fullyQualifiedTypeName name="cont.GUIManager"/>
 <fullyQualifiedTypeName name="java.nio.channels.AcceptPendingException"/>
 <fullyQualifiedTypeName name="cont.RequestLogic"/>
+<fullyQualifiedTypeName name="javax.swing.JFileChooser"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="cont.ListProtocole.ResponseCode"/>
+<fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="cont.ConnectionManager"/>
 </qualifiedTypeNameHistroy>

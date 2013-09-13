@@ -10,6 +10,7 @@ public class RequestLogic {
 	private static final Integer LOGIN = 1;
 	private static final Integer REGISTRATION = 2;
 	private static final Integer LOGOUT = 3;
+	private static final Integer LIST = 4;
 	
 	private RequestLogic(){}
 	public static RequestLogic getInstance(){
@@ -39,6 +40,12 @@ public class RequestLogic {
 			else if(request == LOGOUT){
 				logout(args[0],args[1]);
 			}
+			else if(request == LIST){
+				String sessionID = args[0];
+				String login = args[1];
+				String[] lista = list(sessionID,login);
+				GUIManager.list(mf,lista);
+			}
 		}catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -57,6 +64,11 @@ public class RequestLogic {
 	
 	private static boolean logout(String sessionID,String login) throws IOException {
 		LogoutProtocole lp = new LogoutProtocole();
+		return lp.start(sessionID,login);
+	}
+	
+	private static String[] list(String sessionID,String login) throws IOException{
+		ListProtocole lp = new ListProtocole();
 		return lp.start(sessionID,login);
 	}
 }

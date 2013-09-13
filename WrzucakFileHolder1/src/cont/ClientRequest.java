@@ -1,5 +1,6 @@
 package cont;
 
+import java.io.File;
 import java.nio.channels.SocketChannel;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +16,8 @@ public class ClientRequest implements Runnable {
 	private static final String LOGIN = "LOG";
 	private static final String REGISTER = "REG";
 	private static final String LOGOUT = "OUT";
+	private static final String LIST = "LIS";
+	private static final String SEND = "SEN";
 	ConnectionManager cm;
 	SocketChannel socket;
 	HashMap<String,String> sessionSet;
@@ -47,6 +50,7 @@ public class ClientRequest implements Runnable {
 				login = response[1];
 				hashPassword = response[2];
 				if( DatabaseManager.register(login, hashPassword)){
+					new File("users/"+login).mkdir();
 					cm.sendMessage(MessageCode.OK.name());
 				}
 				else{
@@ -57,6 +61,13 @@ public class ClientRequest implements Runnable {
 				String sessionID = response[1];
 				sessionSet.remove(sessionID);
 				cm.sendMessage(MessageManager.buildMessage(MessageCode.OK.name()));
+			}
+			else if(response[0].equals(LIST)){
+				String sessionID = response[1];
+				//if
+			}
+			else if(response[0].equals(SEND)){
+				String sessionID;
 			}
 			cm.close();
 			break;

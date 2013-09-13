@@ -1,0 +1,22 @@
+package cont;
+
+import cont.LoginProtocole.ResponseCode;
+
+public class ListProtocole {
+	
+	private enum ResponseCode{
+		OK,WRONG,ERROR;
+	}
+	
+	ListProtocole(){}
+	
+	public String[] start(String sessionID,String login){
+		
+		if(cm.tryToConnect(login) == false){
+			return ResponseCode.ERROR.name();
+		}
+		
+		return null;
+		
+	}
+}

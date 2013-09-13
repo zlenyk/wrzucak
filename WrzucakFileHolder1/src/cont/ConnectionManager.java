@@ -1,9 +1,13 @@
 package cont;
 
+import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -16,11 +20,15 @@ public class ConnectionManager {
 		socket = s;
 		std = ByteBuffer.allocate(8192);
 	}
+	ConnectionManager(SocketChannel s,int size){
+		socket = s;
+		std = ByteBuffer.allocate(size);
+	}
 	
 	private void sendBuffer(){
 		
 		while(std.hasRemaining()){
-			try {System.out.println(std.toString());
+			try {
 				socket.write(std);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -29,15 +37,17 @@ public class ConnectionManager {
 		std.flip();
 		std.clear();
 	}
+	
 	private void putStringIntoBuffer(String s){
 		std.clear();
 		std.put(s.getBytes());
 		std.flip();
 	}
+
 	
 	public void sendMessage(String message){
 		putStringIntoBuffer(message + "\n");
-		sendBuffer();
+		
 	}
 	public String readMessage(){
 		String message = "";

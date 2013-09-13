@@ -1,0 +1,35 @@
+package cont;
+
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.nio.channels.ServerSocketChannel;
+import java.util.HashMap;
+import java.util.Map;
+
+public class RecieveFile {
+
+	int sessionID;
+	ServerSocketChannel channel;
+	Map <String,String> sessionSet;
+	
+	private static int getPort(){
+		return 12345;
+	}
+	public RecieveFile(String s) {
+		sessionID = s;
+	}
+	
+	public MainHost(){
+		sessionSet = new HashMap<String,String>();
+		try {
+			channel = ServerSocketChannel.open();
+			channel.socket().bind(new InetSocketAddress(getPort()));
+			
+			System.out.println("Serwer wystartowa³");
+			
+		} catch (IOException e) {
+			System.out.println("B³¹d przy zak³adaniu gniazda.");
+			System.exit(-1);
+		}
+	}
+}

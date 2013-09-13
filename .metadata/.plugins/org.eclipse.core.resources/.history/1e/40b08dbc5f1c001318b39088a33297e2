@@ -1,0 +1,28 @@
+package cont;
+
+import java.io.IOException;
+
+import cont.ConnectionManager.MessageManager;
+
+public class SendFileProtocole {
+
+	private static final String SENDCODE = "SEN";
+	ConnectionManager cm;
+	SendFileProtocole(){
+		cm = new ConnectionManager();
+	}
+	
+	
+	public boolean start(String sessionID,String login) throws IOException{
+		if(cm.tryToConnect(login) == false){
+			return false;
+		}
+		
+		String message = MessageManager.buildMessage(SENDCODE,sessionID,MessageManager.fillLogin(login));
+		cm.write(message);
+		String[] response = MessageManager.decodeResponse(cm.read());
+		
+		return false;
+		
+	}
+}

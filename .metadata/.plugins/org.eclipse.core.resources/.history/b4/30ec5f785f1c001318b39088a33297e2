@@ -1,0 +1,12 @@
+package cont;
+
+public class SendFileProtocole {
+
+	private static final String LOGOUTCODE = "OUT";
+	SendFileProtocole(){}
+	
+	
+	public void start(String sessionID){
+		
+	}
+}

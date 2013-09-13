@@ -1,0 +1,28 @@
+package cont;
+
+
+public class ListProtocole {
+	
+	private static final String LOGINCODE = "LOG";
+	ConnectionManager cm;
+	
+	private enum ResponseCode{
+		OK,WRONG,ERROR;
+	}
+	
+	ListProtocole(){
+		cm = new ConnectionManager();
+	}
+	
+	public String[] start(String sessionID,String login){
+		
+		String [] ret;
+		if(cm.tryToConnect(login) == false){
+			ret[0] = ResponseCode.ERROR.name();
+		}
+		
+		
+		return ret;
+		
+	}
+}

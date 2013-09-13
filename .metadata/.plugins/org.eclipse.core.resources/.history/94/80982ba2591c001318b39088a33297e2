@@ -1,0 +1,16 @@
+package cont;
+
+import java.io.File;
+
+public class FileSender {
+
+	String login;
+	String sessionID;
+	File file;
+	
+	FileSender(String l,String s,File f){
+		login = l;
+		sessionID = s;
+		file = f;
+	}
+}

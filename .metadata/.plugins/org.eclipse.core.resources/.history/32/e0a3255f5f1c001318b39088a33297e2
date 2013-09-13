@@ -1,0 +1,10 @@
+package cont;
+
+public class SendFileProtocole {
+
+	SendFileProtocole(){}
+	
+	public void start(){
+		
+	}
+}

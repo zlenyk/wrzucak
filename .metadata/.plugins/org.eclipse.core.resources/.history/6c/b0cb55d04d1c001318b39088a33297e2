@@ -1,0 +1,36 @@
+package cont;
+
+import java.util.ArrayList;
+
+import cont.ConnectionManager.MessageManager;
+
+
+public class ListProtocole {
+	
+	private static final String LISTCODE = "LIS";
+	ConnectionManager cm;
+	
+	private enum ResponseCode{
+		OK,WRONG,ERROR;
+	}
+	
+	ListProtocole(){
+		cm = new ConnectionManager();
+	}
+	
+	public String[] start(String sessionID,String login){
+		
+		ArrayList<String> ret = new ArrayList<String>();
+		if(cm.tryToConnect(login) == false){
+			ret.add(ResponseCode.ERROR.name());
+			return (String[]) ret.toArray();
+		}
+		
+		String message = MessageManager.buildMessage(LISTCODE,sessionID);
+		cm.write(message);
+		String[] response = MessageManager.decodeResponse(cm.read());
+		
+		return (String[]) ret.toArray();
+		
+	}
+}

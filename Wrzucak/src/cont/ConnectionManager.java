@@ -1,12 +1,16 @@
 package cont;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.math.BigInteger;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -14,6 +18,7 @@ public class ConnectionManager {
 
 	private static final String[] hostsURLs = {"127.0.0.1","127.0.0.1","127.0.0.1"};
 	private static final Integer port = 12345;
+	//private static final Integer filePort = 12346;
 	private OutputStream toHost = null;
 	private Socket clientSocket = null;
 	BufferedReader stdin = null;

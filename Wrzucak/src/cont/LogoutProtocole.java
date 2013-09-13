@@ -35,7 +35,7 @@ public class LogoutProtocole {
 		cm.write(message);
 		String[] response = MessageManager.decodeResponse(cm.read());
 		
-		return response[0] == ResponseCode.OK.name();
+		return response[0].equals(ResponseCode.OK.name());
 		
 	}
 	

@@ -1,0 +1,9 @@
+package cont;
+
+public class RecieveFile {
+
+	int sessionID;
+	public RecieveFile(String s) {
+		sessionID = s;
+	}
+}

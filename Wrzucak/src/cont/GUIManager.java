@@ -35,4 +35,9 @@ public class GUIManager {
 	public static void showUserWindow(MyFrame mf,String sessionID,String login) {
 		mf.showUserWindow(sessionID,login);
 	}
+
+	public static void list(MyFrame mf, String[] lista) {
+		// TODO Auto-generated method stub
+		
+	}
 }
