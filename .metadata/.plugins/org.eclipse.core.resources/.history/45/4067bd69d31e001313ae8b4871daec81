@@ -1,0 +1,17 @@
+
+
+public class Zadanie {
+	{
+		System.out.println("TUTAJ");
+	}
+	static{
+		System.out.println("Statyczny");
+	}
+    public Zadanie() {
+        System.out.println("DUPA");
+    }
+  
+    public static void main(String[] args) {
+        new Zadanie();
+    }
+}

@@ -22,14 +22,13 @@ public class SendFileProtocole {
 		if(cm.tryToConnect(login) == false){
 			return false;
 		}
-		
-		String message = MessageManager.buildMessage(SENDCODE,sessionID,MessageManager.fillLogin(login));
+		Long len = file.length();
+		String message = MessageManager.buildMessage(SENDCODE,sessionID,len.toString(),file.getName());
 		cm.write(message);
 		String[] response = MessageManager.decodeResponse(cm.read());
 		
 		if(response[0].equals(ResponseCode.OK.name())){
-			SendFile sf = new SendFile();
-			sf.streamFile(file);
+			new SendFile().streamFile(file);
 		}
 		
 		return false;

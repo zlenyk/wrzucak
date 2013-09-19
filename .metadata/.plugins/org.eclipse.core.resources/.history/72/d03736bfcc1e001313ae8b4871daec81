@@ -1,0 +1,16 @@
+import java.math.BigInteger;
+import static terminal.Terminal.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+public class Zadanie {
+    public static void main(String[] args){
+        int zero = 0;
+        int one = 1;
+        int two = 2;
+        println(zero + one);
+        println(one/two);
+        println(two/(one +two));
+        println((one + 2*two) % (one + 2));
+    }
+}

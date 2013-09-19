@@ -34,18 +34,14 @@ public class SendFile {
         // creates the file stream
         FileInputStream fileStream = new FileInputStream(file);
  
-        // sending a message before streaming the file
-       /* outStream.writeObject("SENDING_FILE|" +
-                             file.getName() +
-                             "|" + fileSize);
- */
         byte[] buffer = new byte[step];
         while (completed <= fileSize) {
             fileStream.read(buffer);
             outStream.write(buffer);
             completed += step;
         }
-        //outStream.writeObject("SEND_COMPLETE");
+
+        outStream.close();
         fileStream.close();
     }
  

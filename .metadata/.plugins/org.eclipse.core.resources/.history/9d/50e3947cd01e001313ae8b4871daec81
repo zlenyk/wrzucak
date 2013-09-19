@@ -1,0 +1,20 @@
+import static terminal.Terminal.*;
+
+public class ConstructorFromConstructor {
+    public ConstructorFromConstructor() {
+        println("Doing boring basic setup for this object... boring... Did I mention that it is boring?");
+    }
+    public ConstructorFromConstructor(int i) {
+        this();
+        println("Now with my extra option: i = " + i + " I can do something amazing");
+    }
+    public ConstructorFromConstructor(String s) {
+        this(Integer.parseInt(s));
+        println("Did something boring, did something amazing, what to do next?");
+    }
+    public static void main(String[] args) {
+        new ConstructorFromConstructor();
+        new ConstructorFromConstructor(174);
+        new ConstructorFromConstructor("175");
+    }
+}

@@ -1,0 +1,20 @@
+
+
+public class Zadanie {
+    public Zadanie() {
+        System.out.println("Doing boring basic setup for this object... boring... Did I mention that it is boring?");
+    }
+    public Zadanie(int i) {
+        this();
+        System.out.println("Now with my extra option: i = " + i + " I can do something amazing");
+    }
+    public Zadanie(String s) {
+        this(Integer.parseInt(s));
+        System.out.println("Did something boring, did something amazing, what to do next?");
+    }
+    public static void main(String[] args) {
+        new Zadanie();
+        new Zadanie(174);
+        new Zadanie("175");
+    }
+}
