@@ -30,13 +30,13 @@ public class LoginProtocole {
 	 */
 	public String start(String login, String password) throws IOException{
 		
-		if(cm.tryToConnect(login) == false){
+		if(cm.tryToConnect(login,false) == false){
 			return ResponseCode.ERROR.name();
 		}
 		
 		String message = MessageManager.buildMessage(LOGINCODE,MessageManager.fillLogin(login),MessageManager.hashString(password));
-		cm.write(message);
-		String[] response = MessageManager.decodeResponse(cm.read());
+		cm.sendMessage(message);
+		String[] response = MessageManager.decodeResponse(cm.readMessage());
 		
 		if(response[0].equals(ResponseCode.OK.name())){
 			return response[1];

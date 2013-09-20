@@ -1,6 +1,7 @@
 package cont;
 
-import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigInteger;
@@ -9,6 +10,7 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.SocketChannel;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ConnectionManager {
@@ -24,14 +26,14 @@ public class ConnectionManager {
 		socket = s;
 		std = ByteBuffer.allocate(size);
 	}
-	ConnectionManager(BufferedOutputStream out){}
 	
 	public void downloadFile(String path) throws IOException{
 		
-		FileOutputStream fos = new FileOutputStream(path);;
+		File f = new File(path);
+		FileOutputStream fos = new FileOutputStream(f);
 		FileChannel out = fos.getChannel();
 		
-		while(socket.read(std) > 0){
+		while(socket.read(std) != -1){
 			std.flip();
 			out.write(std);
 			std.clear();
@@ -40,6 +42,21 @@ public class ConnectionManager {
 		out.close();
 	}
 	
+    public void streamFile(File file) throws IOException {
+
+        FileInputStream fis = new FileInputStream(file);
+        FileChannel in = fis.getChannel();
+        
+        while(in.read(std) != -1){
+        	std.flip();
+        	sendBuffer();
+        	std.clear();
+        }
+        
+        fis.close();
+        in.close();
+    }
+    
 	private void sendBuffer(){
 		
 		while(std.hasRemaining()){
@@ -61,7 +78,7 @@ public class ConnectionManager {
 
 	
 	public void sendMessage(String message){
-		putStringIntoBuffer(message + "\n");
+		putStringIntoBuffer(message);
 		sendBuffer();
 	}
 	public String readMessage(){
@@ -77,13 +94,17 @@ public class ConnectionManager {
 			System.out.println("NO MESSAGE");
 		}
 		std.flip();
+
 		byte[] bytes = new byte[100];
-		
-		for(int i = 0; i<100 && std.hasRemaining(); i++)
+		int i;
+		for(i = 0; i<100 && std.hasRemaining(); i++)
 			bytes[i] = std.get();
 		
-		message = new String(bytes);
+		byte[] bytess= new byte[i];
+		System.arraycopy(bytes, 0, bytess, 0, i);
 		
+		message = new String(bytess);
+		std.clear();
 		return message;
 	}
 	public static class MessageManager{

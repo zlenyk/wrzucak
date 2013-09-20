@@ -19,16 +19,16 @@ public class SendFileProtocole {
 	
 	
 	public boolean start(String sessionID,String login,File file) throws IOException{
-		if(cm.tryToConnect(login) == false){
+		if(cm.tryToConnect(login,false) == false){
 			return false;
 		}
 		Long len = file.length();
 		String message = MessageManager.buildMessage(SENDCODE,sessionID,len.toString(),file.getName());
-		cm.write(message);
-		String[] response = MessageManager.decodeResponse(cm.read());
+		cm.sendMessage(message);
+		String[] response = MessageManager.decodeResponse(cm.readMessage());
 		
 		if(response[0].equals(ResponseCode.OK.name())){
-			new SendFile().streamFile(file);
+			cm.streamFile(file);
 		}
 		
 		return false;

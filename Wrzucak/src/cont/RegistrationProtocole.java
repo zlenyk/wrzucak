@@ -25,14 +25,14 @@ public class RegistrationProtocole {
 	 */
 	public String start(String login,String password) throws IOException{
 		
-		if(cm.tryToConnect(login) == false){
+		if(cm.tryToConnect(login,false) == false){
 			return ResponseCode.ERROR.name();
 		}
 		
 		String message = MessageManager.buildMessage(REGISTERCODE,MessageManager.fillLogin(login),MessageManager.hashString(password));
-		cm.write(message);
+		cm.sendMessage(message);
 		
-		String[] response = MessageManager.decodeResponse(cm.read());
+		String[] response = MessageManager.decodeResponse(cm.readMessage());
 		System.out.println(response[0]);
 		return response[0];
 

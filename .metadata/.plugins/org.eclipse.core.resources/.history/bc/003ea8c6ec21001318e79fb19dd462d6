@@ -1,0 +1,194 @@
+package cont;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.math.BigInteger;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.channels.SocketChannel;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+public class ConnectionManager {
+
+	private static final String[] hostsURLs = {"127.0.0.1","127.0.0.1","127.0.0.1"};
+	private static final Integer port = 12345;
+	private OutputStream toHost = null;
+	SocketChannel socketChannel = null;
+	ByteBuffer std;
+	BufferedReader stdin = null;
+	private InputStream fromHost = null;
+
+	
+	/**
+	 * @param login
+	 * @param file - true if sending file, false otherwise
+	 * @return if connection to host was successful
+	 */
+	public boolean tryToConnect(String login,boolean file){
+		int NOThostNr = MessageManager.whichHostNotUse(login);
+		if(connectToHost(++NOThostNr,port)){
+			return true;
+		}
+		else{
+			return connectToHost(++NOThostNr,port);
+		}
+	}
+	
+	/**
+	 * @
+	 * @param number which host to use
+	 * @return if operation was successful
+	 */
+	public boolean connectToHost(int number,int port){
+		try {
+			socketChannel = SocketChannel.open();
+			socketChannel.connect(new InetSocketAddress(hostsURLs[number], port));
+		} catch (IOException e) {
+			try {
+				closeAll();
+			} catch (IOException e1){e1.printStackTrace();}
+			e.printStackTrace();
+			return false;
+		}
+		std = ByteBuffer.allocate(8192);
+		return true;
+	}
+	
+	public void downloadFile(String path,int size) throws IOException{
+		
+		ByteBuffer std = ByteBuffer.allocate(size);
+		SocketChannel socket = null;
+		
+		
+		FileOutputStream fos = new FileOutputStream(path);
+		FileChannel out = fos.getChannel();
+		
+		while(socket.read(std) > 0){
+			std.flip();
+			out.write(std);
+			std.clear();
+		}
+		fos.close();
+		out.close();
+	}
+	
+    public void streamFile(File file) throws IOException {
+    	Socket connection = null;
+        ObjectOutputStream outStream = null;
+        
+        try {
+        	connection = new Socket("127.0.0.1",12346);
+            outStream = new ObjectOutputStream(connection.getOutputStream());
+            outStream.flush();
+             
+        } catch (IOException e) {
+            System.out.println("Output stream Error!");
+        }
+        
+        long fileSize = file.length();
+        long completed = 0;
+        int step = 150000;
+ 
+        // creates the file stream
+        FileInputStream fileStream = new FileInputStream(file);
+ 
+        byte[] buffer = new byte[step];
+        while (completed <= fileSize) {
+            fileStream.read(buffer);
+            outStream.write(buffer);
+            completed += step;
+        }
+
+        outStream.close();
+        fileStream.close();
+    }
+    
+    public void recieveFile(){
+    	
+    }
+	public boolean write(String message){
+		try {
+			toHost.write(message.getBytes());
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+	public String read() throws IOException {
+		String linia = "";
+		int c;
+		while ((c = fromHost.read()) != '\n') {
+			linia = linia + (char) c;
+		}
+		
+		return linia;
+	}
+	private void closeAll() throws IOException{
+		if(toHost != null){
+			toHost.close();
+			toHost = null;
+		}
+		if(fromHost != null){
+			fromHost.close();
+			fromHost = null;
+		}
+		if(stdin != null){
+			stdin.close();
+			stdin = null;
+		}
+		if(clientSocket != null){
+			clientSocket.close();
+			clientSocket = null;
+		}
+	}
+	public static class MessageManager{
+		
+		public static String buildMessage(String ... args){
+			String message = "";
+			for(String s : args){
+				message += s + ";";
+			}
+			return message;
+		}
+		public static String hashString(String mes){
+			MessageDigest md5;
+			try {
+				md5 = MessageDigest.getInstance("MD5");
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+				return null; //nie powinna zdarzyæ sie ta sytuacja.
+			}
+			md5.update(mes.getBytes());
+			return (new BigInteger(1,md5.digest())).toString(16);
+		}
+		public static String[] decodeResponse(String response){
+			return response.split("\\;");
+		}
+		public static int whichHostNotUse(String login){
+			int result = 0;
+			
+			return result;
+		}
+		public static String fillLogin(String login){
+			int k = login.length();
+			while(k<20){
+				login += "A";
+				k++;
+			}
+			return login;
+		}
+	}
+}

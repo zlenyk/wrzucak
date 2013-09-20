@@ -1,0 +1,188 @@
+<html>
+<head>
+<style type="text/css">
+ 
+body
+{
+background-color: #fff;
+color: #333;
+font-family: Arial, Helvetica, sans-serif;
+}
+ 
+div.loginblock
+{
+text-align:center;
+margin:0 auto;
+padding:10px;
+width:230px;
+border-style:solid;
+border-width:2px;
+border-color:#ccc;
+border-radius:10px;
+}
+ 
+.loginblock a:link
+{
+background-color:#a0a0a0;
+text-decoration:none;
+border:solid, 1px, #ccc;
+padding:15px 30px;
+margin:0 0 20px;
+font-family:Arial, sans-serif;
+font-size:1.2em;
+text-transform:uppercase;
+font-weight:bold;
+color:#fff;
+cursor:pointer;
+}
+ 
+.loginblock a:hover
+{
+background-color:#0b75b2;
+text-decoration:none;
+border:solid, 1px, #ccc;
+padding:15px 30px;
+margin:0 0 20px;
+font-family:Arial, sans-serif;
+font-size:1.2em;
+text-transform:uppercase;
+font-weight:bold;
+color:#fff;
+cursor:pointer;
+ 
+}
+ 
+input {
+margin-bottom:0px;
+border:0;
+padding:10px;
+font-size:1.3em;
+font-family:Arial, sans-serif;
+color:#aaa;
+border:solid 1px #ccc;
+margin:0 0 20px;
+width:200px;
+}
+ 
+input.submit
+{
+border:solid 1px #ccc;
+padding:15px 30px;
+margin:0 0 20px;
+font-family:Arial, sans-serif;
+font-size:1.2em;
+text-transform:uppercase;
+font-weight:bold;
+color:#333;
+cursor:pointer;
+}
+ 
+</style>
+</head>
+<body>
+ 
+<br />
+<br />
+<div class="loginblock">
+<form method="POST" action="http://localhost:8080/Shop/Login">
+<input type="text" name="login" /><br>
+<input type="password" name="password" /><br>
+<input type="hidden" name ="action" value = "login" />
+<input type="submit">
+</form>
+<br />
+<a href="#">Log In</a>
+<br />
+<br />
+</div>
+ 
+</body>
+</html>
+
+
+
+
+<!doctype html>
+<html>
+    <head>
+        <title>InfoSYS DBMS V19.0</title>
+        <met charset="utf-8">
+            <style type="text/css">
+/*Learn Blogging Tips,Tutorial and Online MOney making Tips,
+     visit http://www.bloggingtemple.com*/
+
+body
+    {
+        width: 80%;
+        background: #GGG;   
+    }
+.header
+{
+    margin-left:180px;
+    width: 90%;
+    height: 100px;
+    text-align: center;
+    line-height:100px; ;
+    border-radius: 100px;
+    background: #e3e3e3;
+    box-shadow: 0px 0px 10px green;
+}
+
+.header h1
+{
+    font-size: 55px;
+    text-shadow: 0px 0px 5px green;
+}
+
+.login
+{
+    width: 60%;
+    height: 400px;
+    background: #e3e3e3;
+    margin-top: 20px;
+    margin-left: 340px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px green;
+    font-family: serif;
+    /*line-height: 400px;*/
+}
+
+.c1{
+
+    margin-left: 180px;
+    margin-top: 40px;
+}
+button{
+    margin-right: 310px;
+}
+
+a{
+    text-decoration: none;
+}
+
+</style>
+<!-- This Page is created by Sarfaraj Alam
+  Visit my Blog :- http://www.whatilearn.info -->
+    </head>
+
+    <body>
+        <div class="header">
+            <h1>InfoSYS DBMS V19.0</h1>
+        </div>
+
+        <div class="login">
+          <div class="c1">
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <form method="POST" action="http://localhost:8080/Shop/Login">
+    			Username <input type="text" name="login" /><br>
+    			Password <input type="password" name="password" /><br><input type = "submit" style="position:left">
+    			<input type="hidden" name ="action" value = "login" />
+            </div>
+            
+            </form>
+        </div>
+    </body>
+</html>

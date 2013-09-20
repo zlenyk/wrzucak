@@ -1,21 +1,41 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-  pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
-  <title>Bookshop</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	
+	<title>Login Page</title>
+	
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	
 </head>
+
 <body>
-  <h2>Bookshop</h2>
-  <form method="POST" action="http://localhost:8080/Shop/Login">
-    Login:<br /><br />
-    <input type="text" name="login" />
-    <input type="text" name="password" />
-    <input type="hidden" name ="action" value = "login" />
-    <input type="submit" value="Login" />
-  </form>
-  <form method="POST" action="http://localhost:8080/Shop/registration.jsp">
-    <input type="submit" value="Register" />
-  </form>
+
+	<form id="login-form" method="post" action="http://localhost:8080/Shop/Login">
+		<fieldset>
+		
+			<legend>Log in</legend>
+			
+			<label for="login">Login</label>
+			<input type="text" id="login" name="login"/>
+			<div class="clear"></div>
+			
+			<label for="password">Password</label>
+			<input type="password" id="password" name="password"/>
+			<div class="clear"></div>
+			
+			<input type="hidden" name ="action" value = "login" />
+			
+			<br />
+			
+			<input type="submit" style="margin: -20px 0 0 287px;" class="button" name="commit" value="Log in"/>	
+		</fieldset>
+	</form>
+	
+	<form id="reg-form" method="post" action="http://localhost:8080/Shop/Registration">
+			<input type="submit" style="margin: 110px 0 0 0px;" class="button" name="commit" value="Register"/>	
+	</form>
 </body>
+
 </html>

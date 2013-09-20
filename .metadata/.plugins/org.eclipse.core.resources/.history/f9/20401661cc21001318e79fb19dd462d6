@@ -1,0 +1,144 @@
+package cont;
+
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.math.BigInteger;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.channels.SocketChannel;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.List;
+
+public class ConnectionManager {
+
+	ByteBuffer std;
+	SocketChannel socket;
+
+	ConnectionManager(SocketChannel s){
+		socket = s;
+		std = ByteBuffer.allocate(8192);
+	}
+	ConnectionManager(SocketChannel s,int size){
+		socket = s;
+		std = ByteBuffer.allocate(size);
+	}
+	ConnectionManager(BufferedOutputStream out){}
+	
+	public void downloadFile(String path) throws IOException{
+		
+		FileOutputStream fos = new FileOutputStream(path);;
+		FileChannel out = fos.getChannel();
+		
+		while(socket.read(std) > 0){
+			std.flip();
+			out.write(std);
+			std.clear();
+		}
+		fos.close();
+		out.close();
+	}
+	
+	
+	private void sendBuffer(){
+		
+		while(std.hasRemaining()){
+			try {
+				socket.write(std);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		std.flip();
+		std.clear();
+	}
+	
+	private void putStringIntoBuffer(String s){
+		std.clear();
+		std.put(s.getBytes());
+		std.flip();
+	}
+
+	
+	public void sendMessage(String message){
+		putStringIntoBuffer(message + "\n");
+		sendBuffer();
+	}
+	public String readMessage(){
+		String message = "";
+		std.clear();
+		int ret = 0;
+		try {
+			ret = socket.read(std);
+		} catch (IOException e) {
+			System.out.println("B³¹d przy odczytaniu wiadomoœci");
+		}
+		if(ret == -1){
+			System.out.println("NO MESSAGE");
+		}
+		std.flip();
+		byte[] bytes = new byte[100];
+		
+		for(int i = 0; i<100 && std.hasRemaining(); i++)
+			bytes[i] = std.get();
+		
+		message = new String(bytes);
+		
+		return message;
+	}
+	public static class MessageManager{
+		
+		public static String buildMessage(List<String>args){
+			String message = "";
+			for(String s : args){
+				message += s + ";";
+			}
+			return message;
+		}
+		
+		public static String buildMessage(String ... args){
+			String message = "";
+			for(String s : args){
+				message += s + ";";
+			}
+			return message;
+		}
+		public static String hashString(String mes){
+			MessageDigest md5;
+			try {
+				md5 = MessageDigest.getInstance("MD5");
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+				return null; //nie powinna zdarzyæ sie ta sytuacja.bardzo.
+			}
+			md5.update(mes.getBytes());
+			return (new BigInteger(1,md5.digest())).toString(16);
+		}
+		public static String[] decodeResponse(String response){
+			return response.split("\\;");
+		}
+		public static int whichHostNotUse(String login){
+			int result = 0;
+			
+			return result;
+		}
+		public static String fillLogin(String login){
+			int k = login.length();
+			while(k<20){
+				login += "A";
+				k++;
+			}
+			return login;
+		}
+	}
+	public void close() {
+		try {
+			socket.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
+}

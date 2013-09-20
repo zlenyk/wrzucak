@@ -14,7 +14,7 @@ public class DatabaseManager {
 	private static final String driverURL = "org.postgresql.Driver";
 
 	public static boolean checkLogin(String login, String password) {
-		ResultSet rs = executeQuery(selectQuery(login, password));System.out.println("AAA:"+login+password);
+		ResultSet rs = executeQuery(selectQuery(login, password));
 		try {
 			if (!rs.next()) {
 				return false;

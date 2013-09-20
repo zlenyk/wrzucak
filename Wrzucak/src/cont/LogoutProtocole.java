@@ -27,13 +27,13 @@ public class LogoutProtocole {
 	 */
 	public boolean start(String sessionID,String login) throws IOException{
 		
-		if(cm.tryToConnect(login) == false){
+		if(cm.tryToConnect(login,false) == false){
 			return false;
 		}
 		
 		String message = MessageManager.buildMessage(LOGOUTCODE,sessionID,MessageManager.fillLogin(login));
-		cm.write(message);
-		String[] response = MessageManager.decodeResponse(cm.read());
+		cm.sendMessage(message);
+		String[] response = MessageManager.decodeResponse(cm.readMessage());
 		
 		return response[0].equals(ResponseCode.OK.name());
 		

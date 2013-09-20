@@ -32,7 +32,7 @@ public class UserWindow extends JFrame implements MyFrame{
 	DefaultListModel<String> model;
 	private static final Integer LOGOUT = 3;
 	private static final Integer LIST = 4;
-	private static final Integer SEND = 5;
+	private static final Integer RECIEVE = 5;
 	private String sessionID = "";
 	private String login = "";
 	/**
@@ -51,7 +51,10 @@ public class UserWindow extends JFrame implements MyFrame{
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		
 		RequestLogic.acceptRequest(uw, LIST, sessionID, login);
+		
+		createList();
 		
 		JButton btnWyloguj = new JButton("Wyloguj");
 		btnWyloguj.addActionListener(new ActionListener() {
@@ -64,46 +67,51 @@ public class UserWindow extends JFrame implements MyFrame{
 		btnWyloguj.setBounds(191, 21, 89, 23);
 		contentPane.add(btnWyloguj);
 		
+		
 		final JFileChooser fileChooser = new JFileChooser();
 		
 		JButton btncignij = new JButton("\u015Aci\u0105gnij");
 		btncignij.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				RequestLogic.acceptRequest(uw,RECIEVE,sessionID,login,list.getSelectedValue());
 			}
 		});
 		btncignij.setBounds(191, 55, 89, 23);
 		contentPane.add(btncignij);
 		
-		list = new JList<String>(new AbstractListModel() {
-			String[] values = new String[] {};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
-		list.setBackground(Color.WHITE);
-		list.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		list.setBounds(10, 11, 125, 148);
-		contentPane.add(list);
 		
 		JButton btnWrzu = new JButton("Wrzu\u0107");
 		btnWrzu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				fileChooser.showOpenDialog(uw);
+				fileChooser.showDialog(uw,"Wrzu\u0107");
 				File file = fileChooser.getSelectedFile();
+				if(file == null){
+					return;
+				}
 				RequestLogic.acceptFile(sessionID, login, file);
+				refreshList();
 			}
 		});
 		btnWrzu.setBounds(191, 89, 89, 23);
 		contentPane.add(btnWrzu);
 	}
+	private void createList(){
+		list = new JList<String>(model);
+
+		list.setBackground(Color.WHITE);
+		list.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		list.setBounds(10, 11, 125, 148);
+		contentPane.add(list);
+	}
 	public void populateList(List<String> lista){
+		model.clear();
 		for(String s : lista){
-			System.out.println(s);
 			model.addElement(s);
 		}
+	}
+	private void refreshList(){
+		model.clear();
+		RequestLogic.acceptRequest(uw, LIST, sessionID, login);
 	}
 	@Override
 	public void displayMessage(String message) {
