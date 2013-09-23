@@ -1,0 +1,17 @@
+import java.util.Map;
+
+private BufferedReader in = null;
+private PrintWriter out = null;
+
+public class Client implements Runnable {
+
+	Client(Map<String,Client> map){
+		
+	}
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

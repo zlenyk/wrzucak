@@ -1,0 +1,15 @@
+import java.util.Map;
+
+
+public class Client implements Runnable {
+
+	Client(Map<String,Client> map){
+		
+	}
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

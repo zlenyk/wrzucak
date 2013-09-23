@@ -1,0 +1,8 @@
+import java.util.HashMap;
+import java.util.Map;
+
+
+public class Protocole {
+	Map<String,Client> map = new HashMap<String,Client>();
+	
+}

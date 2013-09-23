@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String mainURL = "http://localhost:8080/Shop/";
-	private static final String shopURL = "http://localhost:8080/Shop/List";
+	private static final String shopURL = "http://localhost:8080/Shop/UserSite.jsp";
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -71,6 +71,11 @@ public class Login extends HttpServlet {
 			return true;
 		}
 
+		public static boolean addTraining(String user,String year,String month,String day,String length,String minutes,String seconds){
+			System.out.println((addTrainingQuery(user, year,month,day,length,minutes,seconds)));
+			executeQuery(addTrainingQuery(user, year,month,day,length,minutes,seconds));
+			return true;
+		}
 		public static ResultSet listProducts() {
 			return executeQuery(productsQuery());
 		}
@@ -117,7 +122,7 @@ public class Login extends HttpServlet {
 
 		private static String insertQuery(String login, String password,
 				String name, String surname, String address) {
-			return "INSERT INTO users(login,password,name,surname,address) VALUES ('"
+			return "INSERT INTO shopusers(login,password,name,surname,address) VALUES ('"
 					+ login
 					+ "','"
 					+ password
@@ -129,7 +134,7 @@ public class Login extends HttpServlet {
 		}
 
 		private static String selectQuery(String login, String password) {
-			return "SELECT * FROM users WHERE login ='" + login
+			return "SELECT * FROM shopusers WHERE login ='" + login
 					+ "' AND password = '" + password + "';";
 		}
 
@@ -138,13 +143,16 @@ public class Login extends HttpServlet {
 					+ "' AND stock > 0;";
 		}
 
+		private static String addTrainingQuery(String user,String year,String month,String day,String length,String minutes,String seconds){
+			return "INSERT INTO trainings(login,Data,length,Time) values('"+user+"','"+year+"-"+month+"-"+day+"',"+length+",'"+minutes+":"+seconds+"');";
+		}
 		private static String decreaseProductStock(String name) {
 			return "UPDATE products SET stock = stock - 1 WHERE name = '"
 					+ name + "';";
 		}
 
 		private static String loginUsedQuery(String login) {
-			return "SELECT * FROM users WHERE login ='" + login + "';";
+			return "SELECT * FROM shopusers WHERE login ='" + login + "';";
 		}
 	}
 
@@ -156,7 +164,7 @@ public class Login extends HttpServlet {
 		HttpSession session = request.getSession();
 		boolean suceeded;
 
-		if (action.equals("login")) {
+		if (action.equals("login")) {System.out.println("LOGUJEMY");
 			suceeded = login(log, pass);
 			if (suceeded) {
 				session.setAttribute("login", log);

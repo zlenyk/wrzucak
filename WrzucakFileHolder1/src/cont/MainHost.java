@@ -48,7 +48,6 @@ public class MainHost implements Runnable {
 
 	public static void main(String[] args) {
 		new Thread(new MainHost()).start();
-
 	}
 
 }

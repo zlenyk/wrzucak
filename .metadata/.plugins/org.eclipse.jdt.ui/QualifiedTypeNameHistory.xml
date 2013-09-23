@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="java.nio.channels.spi.SelectorProvider"/>
-<fullyQualifiedTypeName name="java.io.BufferedInputStream"/>
-<fullyQualifiedTypeName name="java.io.BufferedOutputStream"/>
 <fullyQualifiedTypeName name="java.nio.file.Path"/>
 <fullyQualifiedTypeName name="java.nio.file.Paths"/>
 <fullyQualifiedTypeName name="java.nio.file.Files"/>
@@ -27,7 +24,6 @@
 <fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="javax.servlet.http.HttpSession"/>
 <fullyQualifiedTypeName name="java.sql.ResultSet"/>
-<fullyQualifiedTypeName name="test.Login.DatabaseManager"/>
 <fullyQualifiedTypeName name="view.MainWindow"/>
 <fullyQualifiedTypeName name="java.io.InputStream"/>
 <fullyQualifiedTypeName name="java.security.MessageDigest"/>
@@ -45,7 +41,6 @@
 <fullyQualifiedTypeName name="java.nio.channels.AcceptPendingException"/>
 <fullyQualifiedTypeName name="cont.RequestLogic"/>
 <fullyQualifiedTypeName name="javax.swing.JFileChooser"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="cont.ListProtocole.ResponseCode"/>
 <fullyQualifiedTypeName name="java.io.File"/>
 <fullyQualifiedTypeName name="cont.SendFileProtocole"/>
@@ -54,4 +49,15 @@
 <fullyQualifiedTypeName name="view.UserWindow"/>
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="javax.swing.DefaultListModel"/>
+<fullyQualifiedTypeName name="java.net.InetSocketAddress"/>
+<fullyQualifiedTypeName name="cont.RecieveFileProtocole"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.nio.channels.Selector"/>
+<fullyQualifiedTypeName name="java.nio.channels.SelectionKey"/>
+<fullyQualifiedTypeName name="java.util.Set"/>
+<fullyQualifiedTypeName name="java.util.Iterator"/>
+<fullyQualifiedTypeName name="java.nio.channels.SelectableChannel"/>
+<fullyQualifiedTypeName name="java.sql.Date"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="test.Login.DatabaseManager"/>
 </qualifiedTypeNameHistroy>

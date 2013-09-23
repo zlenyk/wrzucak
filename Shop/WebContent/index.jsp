@@ -2,20 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	
 	<title>Login Page</title>
-	
-	<link rel="stylesheet" type="text/css" href="style.css" />
 	
 </head>
 
 <body>
 
-	<form id="login-form" method="post" action="http://localhost:8080/Shop/Login">
-		<fieldset>
+	<form method="post" action="http://localhost:8080/Shop/Login">
 		
-			<legend>Log in</legend>
 			
 			<label for="login">Login</label>
 			<input type="text" id="login" name="login"/>
@@ -29,12 +24,11 @@
 			
 			<br />
 			
-			<input type="submit" style="margin: -20px 0 0 287px;" class="button" name="commit" value="Log in"/>	
-		</fieldset>
+			<input type="submit" style="margin: -20px 0 0 287px;" value="Log in"/>	
 	</form>
 	
-	<form id="reg-form" method="post" action="http://localhost:8080/Shop/Registration">
-			<input type="submit" style="margin: 110px 0 0 0px;" class="button" name="commit" value="Register"/>	
+	<form  method="post" action="http://localhost:8080/Shop/registration.jsp">
+			<input type="submit" value="Register"/>	
 	</form>
 </body>
 

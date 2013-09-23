@@ -2,38 +2,28 @@ import java.io.File;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Iterator;
 
 
 public class NioServer implements Runnable{
-	ServerSocketChannel channel;
 	ByteBuffer std;
 	File fileHolder;
 	public static int getPort(){
 		return 12345;
 	}
 	public NioServer(){
-		try {
-			
-			fileHolder = new File("fileHolder");
-			fileHolder.mkdir();
-			
-			channel = ServerSocketChannel.open();
-			channel.socket().bind(new InetSocketAddress(getPort()));
-			
-			System.out.println("Serwer wystartowa³");
-			std = ByteBuffer.allocate(8192);
-			
-		} catch (IOException e) {
-			System.out.println("B³¹d przy zak³adaniu gniazda.");
-			System.exit(-1);
-		}
+		fileHolder = new File("fileHolder");
+		fileHolder.mkdir();
+		
+		System.out.println("Serwer wystartowa³");
+		std = ByteBuffer.allocate(8192);
 	}
 	////////////////////////////////
 	class Message{
@@ -92,7 +82,7 @@ public class NioServer implements Runnable{
 		
 		byte[] bytes = new byte[4];
 
-		for(int i = 0; i<4; i++)
+		for(int i = 0; i<4 && std.hasRemaining(); i++)
 			bytes[i] = std.get();
 		
 		String message = new String(bytes);
@@ -165,28 +155,51 @@ public class NioServer implements Runnable{
 	public void run(){
 		while(true){
 			try {
-				SocketChannel socket = channel.accept();
-				System.out.println("Jest klient.");
+				ServerSocketChannel channel = ServerSocketChannel.open();
+				channel.socket().bind(new InetSocketAddress(getPort()));
+				channel.configureBlocking(false);
+				Selector selector = Selector.open();
 				
-				boolean finish = false;
-				while(!finish)
+				channel.register(selector, SelectionKey.OP_ACCEPT);
+				while(true)
 				{
-					
-					Message mes = getMessage(socket);
-					
-					switch(mes.getType()){
-						case Message.LIST:
-							wyslijListe(socket);
-							break;
-						case Message.GET:
-							File file = getFile(mes.getNumber());
-							wyslijPlik(file,socket);
-							break;
-						case Message.EXIT:
-							finish = true;
-							break;
-						case Message.UNEXPECTED_EXIT:
-							finish = true;
+					selector.select();
+					for (Iterator<SelectionKey> i = selector.selectedKeys().iterator(); i.hasNext();) { 
+						SelectionKey key = i.next(); 
+						i.remove(); 
+						if (key.isConnectable()) { 
+							((SocketChannel)key.channel()).finishConnect(); 
+						}
+						if (key.isAcceptable()) { 
+							// accept connection 
+							SocketChannel client = channel.accept(); 
+							client.configureBlocking(false); 
+							client.socket().setTcpNoDelay(true); 
+							client.register(selector, SelectionKey.OP_READ);
+						} 
+						if (key.isReadable()) {
+							
+							SocketChannel socket = (SocketChannel)key.channel();
+							boolean finish = true;
+							while(finish){
+								Message mes = getMessage(socket);
+								
+								switch(mes.getType()){
+									case Message.LIST:
+										wyslijListe(socket);
+										break;
+									case Message.GET:
+										File file = getFile(mes.getNumber());
+										wyslijPlik(file,socket);
+										break;
+									case Message.EXIT:
+										finish = true;
+										break;
+									case Message.UNEXPECTED_EXIT:
+										finish = true;
+								}
+							}
+						} 
 					}
 				}
 			} catch (IOException e) {

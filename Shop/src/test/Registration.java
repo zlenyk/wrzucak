@@ -53,7 +53,7 @@ public class Registration extends HttpServlet {
 		
 		if(!DatabaseManager.loginUsed(login)){
 			DatabaseManager.register(login, password, name, surname, address);
-			System.out.println("DUPA");
+			System.out.println("LOGIN - " + login +" PASSWORD - " + password);
 			response.sendRedirect(mainURL);
 		}
 		else{
