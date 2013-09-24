@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Tytul</title>
+</head>
+		<!--<frameset rows="100,*" border="1" frameborder="1" framespacing="1">
+  			<frame name="szukaj" noresize="noresize" frameborder="0" src="SearchFriend.html" />
+  			<frame name="znajomy" noresize="noresize" frameborder="0" src="http://localhost:8080/Shop/Friends" />
+  			<noframes><body><a href="index.html">Menu</a></body></noframes>
+		</frameset>-->
+</html>

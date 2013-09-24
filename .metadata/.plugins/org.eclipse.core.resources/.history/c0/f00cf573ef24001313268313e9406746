@@ -1,0 +1,83 @@
+package test;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import test.Login.DatabaseManager;
+
+/**
+ * Servlet implementation class Trainings
+ */
+@WebServlet("/Trainings")
+public class Trainings extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public Trainings() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		generatePage(response,request);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		generatePage(response,request);
+	}
+
+	private void generatePage(HttpServletResponse response,HttpServletRequest request) throws IOException {
+		PrintWriter out = response.getWriter();
+		HttpSession session = request.getSession();
+		String login = session.getAttribute("login").toString();
+		
+		out.println("<html><head><title>Bookshop</title></head><body><h2>Bookshop</h2>");
+		out.println("<h2>TRENINGI</h2><form method='post' action='http://localhost:8080/Shop/addTraining.html'><input type='submit' value='dodaj trening'></form>");
+		try {
+			generateTable(out,login);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		out.println("</body></html>");
+	}
+	
+	private void generateTable(PrintWriter out,String login) throws SQLException{
+		out.println("<table border = '1'>");
+			out.println("<tr>");
+				out.println("<th></th>");
+				out.println("<th>Training</th>");
+				out.println("<th>Price</th>");
+			out.println("</tr>");
+		ResultSet set = listTrainings(login);
+		while(set.next()){
+			out.println("<tr>");
+				generateProduct(out,set.getString("time"),set.getInt("length"));
+			out.println("</tr>");
+		}
+		out.println("</table>");
+	}
+	private void generateProduct(PrintWriter out,String name,int price){
+		out.println("<td>"+ name + "</td>");
+		out.println("<td>"+ price + " $" + "</td>");
+	}
+	private static ResultSet listTrainings(String login){
+		return DatabaseManager.listTrainings(login);
+	}
+}

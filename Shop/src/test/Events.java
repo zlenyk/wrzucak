@@ -40,9 +40,9 @@ public class Events extends HttpServlet {
 
 	private void generatePage(HttpServletResponse response,HttpServletRequest request) throws IOException {
 		PrintWriter out = response.getWriter();
-		out.println("<html><head><title>Bookshop</title></head><body><h2>Bookshop</h2>");
+		out.println("<html><head><link rel='Stylesheet' type='text/css' href='style.css' /><title>Bookshop</title></head><body class = 'back'><h2>Bookshop</h2>");
 		out.println("<p>ZAWODY</p>");
-		out.println("</body></html>");
+		out.println("<form method='post' action='http://localhost:8080/Shop/addEvent.html'><input type='submit' value='dodaj trening'></form></body></html>");
 	}
 
 }

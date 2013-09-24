@@ -13,8 +13,9 @@
 		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="" key="selection"/>
+		<item value="check" key="selection"/>
 		<list key="findhistory">
+			<item value="check"/>
 			<item value="NO MESSAGE"/>
 			<item value="Prze"/>
 			<item value="prze"/>

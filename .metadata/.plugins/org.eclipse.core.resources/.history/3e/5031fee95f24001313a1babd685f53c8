@@ -1,7 +1,0 @@
-@CHARSET "UTF-8";
-ul, ul li {
-	display: block;
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
