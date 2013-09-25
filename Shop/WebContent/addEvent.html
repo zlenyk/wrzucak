@@ -7,14 +7,11 @@
 </head>
 <body class = "back">
   <form method="POST" action="http://localhost:8080/Shop/AddEvent">
-    Registration:<br /><br />
+    Dodaj bieg:<br /><br />
     <div class="box" >
 	    <table>
 	    	<tr>
-	    		<td>Tytuł</td> <td><input type="text" name="title" /></td>
-	    	</tr>
-	    	<tr>
-	    		<td>Opis wydarzenia</td> <td><input type="text" name="description" /></td>
+	    		<td>Nazwa</td> <td><input type="text" name="description" /></td>
 	    	</tr>
 	    	<tr>
 	    		<td>Rok</td> <td><input type="text" name="year" /></td>
@@ -37,7 +34,10 @@
 	    </table>
     </div>
     <br />
-    <input type="submit" value="Dodaj" />
+    <input class = "button" type="submit" value="Dodaj" />
   </form>
+    <form action="http://localhost:8080/Shop/userSite.html">
+    <input class = "button" type="submit" value="Strona Główna">
+</form>
 </body>
 </html>

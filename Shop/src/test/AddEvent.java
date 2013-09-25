@@ -47,6 +47,7 @@ public class AddEvent extends HttpServlet {
 		String description = request.getParameter("description");
 		String place = request.getParameter("place");
 		DatabaseManager.addEvent(login, description, DatabaseManager.makeDate(year, month, day), length, hour, place);
+		response.sendRedirect("http://localhost:8080/Shop/Events");
 	}
 
 }

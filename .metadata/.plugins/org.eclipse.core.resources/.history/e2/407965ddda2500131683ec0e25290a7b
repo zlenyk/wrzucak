@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel='Stylesheet' type='text/css' href='style.css' />
+<title>Insert title here</title>
+</head>
+<body class = "back">
+  <form method="POST" action="http://localhost:8080/Shop/AddEvent">
+    Registration:<br /><br />
+    <div class="box" >
+	    <table>
+	    	<tr>
+	    		<td>Nazwa</td> <td><input type="text" name="description" /></td>
+	    	</tr>
+	    	<tr>
+	    		<td>Rok</td> <td><input type="text" name="year" /></td>
+	    	</tr>
+	    	<tr>
+	    		<td>Miesiac :</td> <td><input type="text" name="month" /></td>
+	    	</tr>
+	    	<tr>
+	    		<td>Dzien :</td> <td><input type="text" name="day" /></td>
+	    	</tr>
+	    	<tr>
+	    		<td>Godzina :</td> <td><input type="text" name="hour" /></td>
+	    	</tr>
+	    	<tr>
+	    		<td>Dlugosc biegu :</td> <td><input type="text" name="length" /></td>
+	    	</tr>
+	    	<tr>
+	    		<td>Miejsce :</td> <td><input type="text" name="place" /></td>
+	    	</tr>
+	    </table>
+    </div>
+    <br />
+    <input type="submit" value="Dodaj" />
+  </form>
+</body>
+</html>

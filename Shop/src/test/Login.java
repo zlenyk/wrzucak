@@ -6,6 +6,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -55,7 +57,18 @@ public class Login extends HttpServlet {
 				return false;
 			}
 		}
-
+		public static boolean checkTakePart(String login, String event) {
+			ResultSet rs = executeQuery(checkTakePartQuery(login,event));
+			try {
+				if (!rs.next()) {
+					return false;
+				}
+				return true;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return false;
+			}
+		}
 		public static boolean loginUsed(String login) {
 			ResultSet rs = executeQuery(loginUsedQuery(login));
 			try {
@@ -80,31 +93,29 @@ public class Login extends HttpServlet {
 			executeQuery(addEventQuery(user,description,date,length,hour,place));
 			return true;
 		}
-		public static ResultSet listProducts() {
-			return executeQuery(productsQuery());
+		public static boolean takePart(String user,String event){
+			if(!checkTakePart(user,event)){
+				executeQuery(takePartQuery(user, event));
+				executeQuery(increaseQuery(event));
+			}
+			return true;
 		}
-
+		public static boolean notTakePart(String user,String event){
+			executeQuery(notTakePartQuery(user, event));
+			executeQuery(decreaseQuery(event));
+			return true;
+		}
 		public static ResultSet listTrainings(String login){
 			return executeQuery(trainingsLoginQuery(login));
 		}
+		public static ResultSet listEvents(){
+			return executeQuery(listEventsQuery());
+		}
+		public static ResultSet listMyEvents(String login){
+			return executeQuery(listMyEventsQuery(login));
+		}
 		public static ResultSet getLogin(String name,String surname){
 			return executeQuery(LoginQuery(name,surname));
-		}
-		public static boolean checkStock(String name) {
-			ResultSet rs = executeQuery(productsStockQuery(name));
-			try {
-				if (!rs.next()) {
-					return false;
-				}
-				return true;
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return false;
-			}
-		}
-
-		public static void decreaseStock(String name) {
-			executeQuery(decreaseProductStock(name));
 		}
 
 		public static ResultSet executeQuery(String query) {
@@ -126,14 +137,33 @@ public class Login extends HttpServlet {
 			}
 		}
 
+		public static String checkTakePartQuery(String login,String event){
+			return "SELECT * from uevent WHERE login = '"+login+"' AND event = '"+event+"';";
+		}
+		public static String takePartQuery(String login,String event){
+			return "INSERT into uevent(login,event) VALUES('"+login+"','"+event+"');";
+		}
+		public static String notTakePartQuery(String login,String event){
+			return "DELETE FROM uevent WHERE login = '"+login+"' AND event = '"+event+"';";
+		}
+		public static String increaseQuery(String event){
+			return "UPDATE events SET count = count + 1 WHERE description = '"+event+"';";
+		}
+		public static String decreaseQuery(String event){
+			return "UPDATE events SET count = count - 1 WHERE description = '"+event+"';";
+		}
+		public static String listMyEventsQuery(String login){
+			return "SELECT * FROM events e JOIN uevent ue ON e.description = ue.event WHERE ue.login = '"+login+"';";
+		}
 		public static String trainingsLoginQuery(String login){
 			return "SELECT * FROM trainings WHERE login = '"+login+"';";
 		}
+		public static String listEventsQuery(){
+			String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+			return "SELECT * FROM events WHERE day >'"+date+"'ORDER BY day;";
+		}
 		public static String LoginQuery(String name,String surname){
 			return "SELECT login FROM shopusers WHERE name = '"+name+"' AND surname = '"+surname+"';";
-		}
-		public static String productsQuery() {
-			return "SELECT * FROM products;";
 		}
 
 		private static String insertQuery(String login, String password,
@@ -154,23 +184,13 @@ public class Login extends HttpServlet {
 					+ "' AND password = '" + password + "';";
 		}
 
-		public static String productsStockQuery(String name) {
-			return "SELECT * FROM products WHERE name ='" + name
-					+ "' AND stock > 0;";
-		}
-
 		private static String addTrainingQuery(String user,String year,String month,String day,String length,String minutes,String seconds){
 			return "INSERT INTO trainings(day,length,time,login) values('"+year+"-"+month+"-"+day+"',"+length+",'"+minutes+":"+seconds+"','"+user+"');";
 		}
 		private static String addEventQuery(String user,String description,String date,String length,String hour,String place){
-			return "INSERT INTO events(day, length, place, decription, hour, login) VALUES ('"+ date +"', "+ length +", '"+ place +"','"+ description +"','"+ hour +"', '"+ user +"');";
+			return "INSERT INTO events(day, length, place, description, hour, login) VALUES ('"+ date +"', "+ length +", '"+ place +"','"+ description +"','"+ hour +"', '"+ user +"');";
 
 		}
-		private static String decreaseProductStock(String name) {
-			return "UPDATE products SET stock = stock - 1 WHERE name = '"
-					+ name + "';";
-		}
-
 		private static String loginUsedQuery(String login) {
 			return "SELECT * FROM shopusers WHERE login ='" + login + "';";
 		}
@@ -183,7 +203,6 @@ public class Login extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		String pass = request.getParameter("password");
 		String log = request.getParameter("login");
-		String action = request.getParameter("action");
 		HttpSession session = request.getSession();
 
 		if (login(log, pass)) {
@@ -192,9 +211,11 @@ public class Login extends HttpServlet {
 			session.setAttribute("logged", true);
 			response.sendRedirect(shopURL);
 		}
+		else{
+			response.sendRedirect(mainURL);
+		}
 
 	}
-
 
 	public static boolean login(String log, String pass) {
 		return DatabaseManager.checkLogin(log, pass);

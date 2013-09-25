@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel='Stylesheet' type='text/css' href='style.css' />
+<title>Insert title here</title>
+</head>
+<body class = "back">
+  <form method="POST" action="http://localhost:8080/Shop/AddTraining">
+    Registration:<br /><br />
+    <div class="box" >
+	    <table>
+	    	<tr>
+	    		<td>Rok</td> <td><input type="text" name="year" /></td>
+	    	</tr>
+	    	<tr>
+	    		<td>Miesiac :</td> <td><input type="text" name="month" /></td>
+	    	</tr>
+	    	<tr>
+	    		<td>Dzien :</td> <td><input type="text" name="day" /></td>
+	    	</tr>
+	    	<tr>
+	    		<td>Minuty :</td> <td><input type="text" name="minutes" /></td>
+	    	</tr>
+	    	<tr>
+	    		<td>Sekundy :</td> <td><input type="text" name="seconds" /></td>
+	    	</tr>
+	    	<tr>
+	    		<td>Dlugosc :</td> <td><input type="text" name="length" /></td>
+	    	</tr>
+	    </table>
+    </div>
+    <br />
+    <input type="submit" value="Dodaj" />
+  </form>
+</body>
+</html>

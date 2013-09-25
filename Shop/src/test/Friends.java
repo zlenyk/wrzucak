@@ -55,16 +55,18 @@ public class Friends extends HttpServlet {
 		String name = request.getParameter("name");
 		String surname = request.getParameter("surname");
 		if(name == null){
-			out.println("<html><head><title>Znajomi</title></head><body><h2>Znajomi</h2>");
+			out.println("<html><head><title>Znajomi</title><link rel='Stylesheet' type='text/css' href='style.css' /></head><body class = 'back'><h2>Wyszukaj znajomych</h2>");
 			out.println("</body></html>");
 			return;
 		}
 		ResultSet log = getLogin(name,surname);
-		out.println("<html><head><link rel='Stylesheet' type='text/css' href='style.css' /><title>Bookshop</title></head><body><h2>Bookshop</h2>");
-		out.println("<h2>TRENINGI - " + name + " " + surname + "</h2>");
+		out.println("<html><head><link rel='Stylesheet' type='text/css' href='style.css' /></head><body class = 'back'>");
 		if(log.next()){
 			try {
+				out.println("<h2>TRENINGI - " + name + " " + surname + "</h2>");
 				generateTable(out,log.getString("login"));
+				out.println("<h2>ZAWODY - " + name + " " + surname + "</h2>");
+				generateEventTable(out,log.getString("login"));
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -99,5 +101,30 @@ public class Friends extends HttpServlet {
 	}
 	private static ResultSet listTrainings(String login){
 		return DatabaseManager.listTrainings(login);
+	}
+	
+	private void generateEventTable(PrintWriter out,String login) throws SQLException{
+		out.println("<div class='box'><table>");
+			out.println("<tr>");
+				out.println("<th>Title</th>");
+				out.println("<th>Place</th>");
+				out.println("<th>Date</th>");
+				out.println("<th>Length</th>");;
+			out.println("</tr>");
+			
+		ResultSet set = DatabaseManager.listMyEvents(login);
+		
+		while(set.next()){
+			out.println("<tr>");
+			generateEventProduct(out,set.getString("description"),set.getString("place"),set.getDate("day").toString(),set.getInt("length"));
+			out.println("</tr>");
+		}
+		out.println("</table></div>");
+	}
+	private void generateEventProduct(PrintWriter out,String title,String place,String day,int length){
+		out.println("<td>"+ title + "</td>");
+		out.println("<td>"+ place + "</td>");
+		out.println("<td>"+ day + "</td>");
+		out.println("<td>"+ length + " km" + "</td>");
 	}
 }

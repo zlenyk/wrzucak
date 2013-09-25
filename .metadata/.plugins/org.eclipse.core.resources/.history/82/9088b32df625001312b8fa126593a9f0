@@ -1,0 +1,52 @@
+package server;
+
+import java.rmi.Naming;
+import java.rmi.RemoteException;
+import java.util.Scanner;
+
+public class Client implements ClientInt{
+
+	private SerwerInt mycs;
+	public Client (SerwerInt cs) throws RemoteException
+	{
+		mycs=cs;
+		mycs.register(this);
+	}
+
+	public synchronized void receive (String s) throws RemoteException
+	{
+	System.out.println("Message: "+s);
+	}
+	public void Run ()
+	{
+	Scanner in=new Scanner(System.in);
+	String msg;
+
+	while(true)
+	{
+	try
+	{
+	msg=in.nextLine();
+	mycs.broadcast(msg);
+	}
+	catch(Exception e)
+	{
+	e.printStackTrace();
+	}
+	}
+	}
+
+	public static void main (String[] args)
+	{
+	String url = "rmi:localhost/SerwerInt";
+	try
+	{
+	SerwerInt cs= (SerwerInt) Naming.lookup(url);
+	New Thread(new ChatClientImpl(cs)).start();
+	}
+	catch (Exception e)
+	{
+	System.err.println(“Problem….”) ;
+	}
+	}
+}

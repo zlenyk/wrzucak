@@ -1,8 +1,6 @@
 package test;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,7 +16,7 @@ import test.Login.DatabaseManager;
 public class Registration extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String mainURL = "http://localhost:8080/Shop/";
-	private static final String registrationURL = "http://localhost:8080/Shop/registration.jsp";
+	private static final String registrationURL = "http://localhost:8080/Shop/registration.html";
     /**
      * @see HttpServlet#HttpServlet()
      */

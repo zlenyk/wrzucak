@@ -1,0 +1,47 @@
+package server;
+
+import java.io.PrintStream;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.server.UnicastRemoteObject;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+public class Serwer implements SerwerInt {
+
+	private LinkedList<ChatClient> myclients;
+
+	public chatServerImple() throws RemoteException
+	{
+	myclients = new LinkList<ChatClient>();
+	}
+
+	public synchronized void register (ChatClient c) throws RemoteException
+	{
+	myclients.add(c);
+	}
+
+	public synchronized void broadcast (String s) throws RemoteException
+	{
+	for(int i=0;i< myclient.size();i++)
+	{
+	myclients.get(i).receive(s);
+	}
+	}
+
+	public static void main (String[] args)
+	{
+	try
+	{
+	Naming.rebind(“ChatServer”, new ChatServerImpl());
+	}
+	catch(Exception e)
+	{
+	System.err.println(“Problem….”) ;
+	}
+	}
+	}
+}

@@ -55,7 +55,7 @@ public class Trainings extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		out.println("<form method='post' action='http://localhost:8080/Shop/addTraining.html'><input type='submit' value='dodaj trening'></form></body></html>");
+		out.println("<form method='post' action='http://localhost:8080/Shop/addTraining.html'><input class = 'button' type='submit' value='dodaj trening'></form></body></html>");
 	}
 	
 	private void generateTable(PrintWriter out,String login) throws SQLException{

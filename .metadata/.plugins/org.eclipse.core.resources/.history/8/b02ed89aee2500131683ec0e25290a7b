@@ -1,0 +1,209 @@
+package test;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+/**
+ * Servlet implementation class Login
+ */
+@WebServlet("/Login")
+public class Login extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	private static final String mainURL = "http://localhost:8080/Shop/";
+	private static final String shopURL = "http://localhost:8080/Shop/userSite.html";
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	public static class DatabaseManager {
+
+		private static final String dataBaseURL = "jdbc:postgresql://127.0.0.1:5432/postgres";
+		private static final String dataBaseLogin = "postgres";
+		private static final String dataBasePassword = "postgres";
+		private static final String driverURL = "org.postgresql.Driver";
+
+		public static boolean checkLogin(String login, String password) {
+			ResultSet rs = executeQuery(selectQuery(login, password));
+			try {
+				if (!rs.next()) {
+					return false;
+				}
+				return true;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return false;
+			}
+		}
+
+		public static boolean loginUsed(String login) {
+			ResultSet rs = executeQuery(loginUsedQuery(login));
+			try {
+				return rs.next();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return false;
+			}
+		}
+
+		public static boolean register(String login, String password,String name,String surname,String address) {
+			executeQuery(insertQuery(login, password,name,surname,address));
+			return true;
+		}
+
+		public static boolean addTraining(String user,String year,String month,String day,String length,String minutes,String seconds){
+			System.out.println((addTrainingQuery(user, year,month,day,length,minutes,seconds)));
+			executeQuery(addTrainingQuery(user, year,month,day,length,minutes,seconds));
+			return true;
+		}
+		public static boolean addEvent(String user,String description,String date,String length,String hour,String place){
+			executeQuery(addEventQuery(user,description,date,length,hour,place));
+			return true;
+		}
+		public static boolean takePart(String user,String event){
+			executeQuery(takePartQuery(user, event));
+			executeQuery(increaseQuery(event));
+			return true;
+		}
+		public static boolean notTakePart(String user,String event){
+			executeQuery(notTakePartQuery(user, event));
+			executeQuery(decreaseQuery(event));
+			return true;
+		}
+		public static ResultSet listTrainings(String login){
+			return executeQuery(trainingsLoginQuery(login));
+		}
+		public static ResultSet listEvents(){
+			return executeQuery(listEventsQuery());
+		}
+		public static ResultSet listMyEvents(String login){
+			return executeQuery(listMyEventsQuery(login));
+		}
+		public static ResultSet getLogin(String name,String surname){
+			return executeQuery(LoginQuery(name,surname));
+		}
+
+		public static ResultSet executeQuery(String query) {
+			Connection dataBase = null;
+			try {
+				Class.forName(driverURL).newInstance();
+			} catch (InstantiationException | IllegalAccessException
+					| ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+			try {
+				dataBase = DriverManager.getConnection(dataBaseURL,
+						dataBaseLogin, dataBasePassword);
+				Statement stat = dataBase.createStatement();
+				return stat.executeQuery(query);
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+
+		public static String takePartQuery(String login,String event){
+			return "INSERT into uevent(login,event) VALUES('"+login+"','"+event+"');";
+		}
+		public static String notTakePartQuery(String login,String event){
+			return "DELETE FROM uevent WHERE login = '"+login+"' AND event = '"+event+"';";
+		}
+		public static String increaseQuery(String event){
+			return "UPDATE events SET count = count + 1 WHERE description = '"+event+"';";
+		}
+		public static String decreaseQuery(String event){
+			return "UPDATE events SET count = count - 1 WHERE description = '"+event+"';";
+		}
+		public static String listMyEventsQuery(String login){
+			return "SELECT * FROM events e JOIN userEvent ue ON e.name = ue.name WHERE ue.user = '"+login+";'";
+		}
+		public static String trainingsLoginQuery(String login){
+			return "SELECT * FROM trainings WHERE login = '"+login+"';";
+		}
+		public static String listEventsQuery(){
+			String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+			return "SELECT * FROM events WHERE day >'"+date+"'ORDER BY day;";
+		}
+		public static String LoginQuery(String name,String surname){
+			return "SELECT login FROM shopusers WHERE name = '"+name+"' AND surname = '"+surname+"';";
+		}
+
+		private static String insertQuery(String login, String password,
+				String name, String surname, String address) {
+			return "INSERT INTO shopusers(login,password,name,surname,address) VALUES ('"
+					+ login
+					+ "','"
+					+ password
+					+ "','"
+					+ name
+					+ "','"
+					+ surname
+					+ "','" + address + "');";
+		}
+
+		private static String selectQuery(String login, String password) {
+			return "SELECT * FROM shopusers WHERE login ='" + login
+					+ "' AND password = '" + password + "';";
+		}
+
+		private static String addTrainingQuery(String user,String year,String month,String day,String length,String minutes,String seconds){
+			return "INSERT INTO trainings(day,length,time,login) values('"+year+"-"+month+"-"+day+"',"+length+",'"+minutes+":"+seconds+"','"+user+"');";
+		}
+		private static String addEventQuery(String user,String description,String date,String length,String hour,String place){
+			return "INSERT INTO events(day, length, place, description, hour, login) VALUES ('"+ date +"', "+ length +", '"+ place +"','"+ description +"','"+ hour +"', '"+ user +"');";
+
+		}
+		private static String loginUsedQuery(String login) {
+			return "SELECT * FROM shopusers WHERE login ='" + login + "';";
+		}
+		public static String makeDate(String year,String month,String day){
+			return year + "-" + month + "-" + day;
+		}
+	}
+
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		String pass = request.getParameter("password");
+		String log = request.getParameter("login");
+		HttpSession session = request.getSession();
+
+		if (login(log, pass)) {
+			session.setAttribute("login", log);
+			session.setAttribute("password", pass);
+			session.setAttribute("logged", true);
+			response.sendRedirect(shopURL);
+		}
+		else{
+			response.sendRedirect(mainURL);
+		}
+
+	}
+
+	public static boolean login(String log, String pass) {
+		return DatabaseManager.checkLogin(log, pass);
+	}
+
+
+}
