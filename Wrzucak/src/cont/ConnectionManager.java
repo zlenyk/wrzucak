@@ -14,8 +14,8 @@ import java.security.NoSuchAlgorithmException;
 
 public class ConnectionManager {
 
-	private static final String[] hostsURLs = {"127.0.0.1","127.0.0.1","127.0.0.1"};
-	private static final Integer port = 12345;
+	private static final String hostURL = "127.0.0.1";
+	private static final int[] ports = {12345,12346,12347};
 	SocketChannel socketChannel = null;
 	ByteBuffer std;
 
@@ -27,23 +27,26 @@ public class ConnectionManager {
 	 */
 	public boolean tryToConnect(String login,boolean file){
 		int NOThostNr = MessageManager.whichHostNotUse(login);
-		if(connectToHost(++NOThostNr,port)){
+		if(connectToHost(hostURL,ports[(++NOThostNr)%3])){
 			return true;
 		}
 		else{
-			return connectToHost(++NOThostNr,port);
+			return connectToHost(hostURL,ports[(++NOThostNr)%3]);
 		}
 	}
 	
+	public boolean tryToConnectDirectly(int nr){
+		return connectToHost(hostURL,ports[nr]);
+	}
 	/**
 	 * @
 	 * @param number which host to use
 	 * @return if operation was successful
 	 */
-	public boolean connectToHost(int number,int port){
+	public boolean connectToHost(String URL,int port){
 		try {
 			socketChannel = SocketChannel.open();
-			socketChannel.connect(new InetSocketAddress(hostsURLs[number], port));
+			socketChannel.connect(new InetSocketAddress(URL, port));
 		} catch (IOException e) {
 			e.printStackTrace();
 			return false;

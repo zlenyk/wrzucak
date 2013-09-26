@@ -1,15 +1,4 @@
-
-
-public class Zadanie {
-	
-	static class A{
-		B b;
-	}
-	static class B{
-		A a;
-	}
-  
-    public static void main(String[] args) {
-        new Zadanie();
-    }
-}
+public interface @A1 { }
+public @interface @A2 { }
+public @interface A3 { }
+@Annotation public interface A4 { }

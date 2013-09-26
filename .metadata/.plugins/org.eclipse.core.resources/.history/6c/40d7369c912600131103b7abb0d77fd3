@@ -1,0 +1,10 @@
+final class ZadanieBase {
+private int a;
+static int b = 14;
+public ZadanieBase() { a = 10; }
+}
+public class Zadanie extends ZadanieBase {
+public static void main(String[] args) {
+System.out.println("b = " + b);
+}
+}

@@ -1,0 +1,6 @@
+public class Zadanie {
+static int a;
+static class B {a = 1;C c = new Zadanie().new C(); }
+class C { B b = new B();}
+public static void main(String[] args){}
+}

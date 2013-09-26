@@ -1,0 +1,4 @@
+public class Zadanie {
+class B extends Zadanie {}
+class C extends B {}
+}

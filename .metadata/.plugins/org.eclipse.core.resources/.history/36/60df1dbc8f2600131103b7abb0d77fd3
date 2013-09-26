@@ -1,0 +1,6 @@
+public class Zadanie {
+
+static class B extends Zadanie {C c = new C(); }
+class C extends B{}
+public static void main(String[] args){}
+}

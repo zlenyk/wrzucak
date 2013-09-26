@@ -1,0 +1,61 @@
+COUNT: 10, TIME: 13015
+COUNT: 50, TIME: 53187
+COUNT: 100, TIME: 67234
+
+
+I5114-LEZY@I5114-LEZY>-class:com.sem.ext.app.mcs.partner.log.CustomerTransferBatch
+Error: KRN-1016 Class "class:com.sem.ext.app.mcs.partner.log.CustomerTransferBatch" not found.
+
+I5114-LEZY@I5114-LEZY>dbgcl -class:com.sem.ext.app.mcs.partner.log.CustomerTransferBatch
+Error: KRN-1016 Class "dbgcl" not found.
+
+I5114-LEZY@I5114-LEZY>dbgcls -class:com.sem.ext.app.mcs.partner.log.CustomerTransferBatch
+Information: KRN-1301 The debugging level for the version "4.3:5.1.0" of the class "com.sem.ext.app.mcs.partner.log.CustomerTransferBatch" was set to: ALL.
+
+I5114-LEZY@I5114-LEZY>INFO com.sem.ext.app.mcs.partner.log.CustomerTransferBatch
+	begin customer acceptance
+INFO com.sem.ext.app.mcs.partner.log.CustomerTransferBatch
+	Customer acceptance completed (took: 357563 ms)
+COUNT: 300, TIME: 175156
+INFO com.sem.ext.app.mcs.partner.log.CustomerTransferBatch
+	begin customer acceptance
+INFO com.sem.ext.app.mcs.partner.log.CustomerTransferBatch
+	Customer acceptance completed (took: 15063 ms)
+COUNT: 10, TIME: 10250
+COUNT: 0, TIME: 56860
+INFO com.sem.ext.app.mcs.partner.log.CustomerTransferBatch
+	begin customer acceptance
+INFO com.sem.ext.app.mcs.partner.log.CustomerTransferBatch
+	Customer acceptance completed (took: 49922 ms)
+COUNT: 50, TIME: 43859
+COUNT: 30, TIME: 21250
+COUNT: 0, TIME: 310953
+INFO com.sem.ext.app.mcs.partner.log.CustomerTransferBatch
+	begin customer acceptance
+INFO com.sem.ext.app.mcs.partner.log.CustomerTransferBatch
+	Customer acceptance completed (took: 303937 ms)
+COUNT: 300, TIME: 230171
+COUNT: 0, TIME: 105750
+INFO com.sem.ext.app.mcs.partner.log.CustomerTransferBatch
+	begin customer acceptance
+INFO com.sem.ext.app.mcs.partner.log.CustomerTransferBatch
+	Customer acceptance completed (took: 90703 ms)
+COUNT: 100, TIME: 81563
+COUNT: 0, TIME: 69766
+INFO com.sem.ext.app.mcs.partner.log.CustomerTransferBatch
+	begin customer acceptance
+INFO com.sem.ext.app.mcs.partner.log.CustomerTransferBatch
+	Customer acceptance completed (took: 52593 ms)
+COUNT: 50, TIME: 42094
+COUNT: 0, TIME: 38438
+INFO com.sem.ext.app.mcs.partner.log.CustomerTransferBatch
+	begin customer acceptance
+INFO com.sem.ext.app.mcs.partner.log.CustomerTransferBatch
+	Customer acceptance completed (took: 31063 ms)
+COUNT: 30, TIME: 28704
+COUNT: 0, TIME: 5828
+INFO com.sem.ext.app.mcs.partner.log.CustomerTransferBatch
+	begin customer acceptance
+INFO com.sem.ext.app.mcs.partner.log.CustomerTransferBatch
+	Customer acceptance completed (took: 13859 ms)
+COUNT: 0, TIME: 5922

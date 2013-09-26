@@ -1,0 +1,6 @@
+public class Zadanie {
+
+static class B {C c = new Zadanie.C(); }
+class C { B b = new B();}
+public static void main(String[] args){}
+}

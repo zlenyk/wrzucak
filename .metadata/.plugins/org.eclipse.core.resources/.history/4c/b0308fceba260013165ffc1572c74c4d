@@ -1,0 +1,176 @@
+package cont;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.math.BigInteger;
+import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.channels.SocketChannel;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+public class ConnectionManager {
+
+	private static final String[] hostsURLs = {"127.0.0.1","127.0.0.1","127.0.0.1"};
+	private static final Integer port = 12345;
+	private static final int[] ports = {12345,12346,12347};
+	SocketChannel socketChannel = null;
+	ByteBuffer std;
+
+	
+	/**
+	 * @param login
+	 * @param file - true if sending file, false otherwise
+	 * @return if connection to host was successful
+	 */
+	public boolean tryToConnect(String login,boolean file){
+		int NOThostNr = MessageManager.whichHostNotUse(login);
+		if(connectToHost((++NOThostNr)%3,port)){
+			return true;
+		}
+		else{
+			return connectToHost((++NOThostNr)%3,port);
+		}
+	}
+	
+	public boolean tryToConnectDirectly(int nr){
+		return connectToHost("127.0.0.1",)
+	}
+	/**
+	 * @
+	 * @param number which host to use
+	 * @return if operation was successful
+	 */
+	public boolean connectToHost(String URL,int port){
+		try {
+			socketChannel = SocketChannel.open();
+			socketChannel.connect(new InetSocketAddress(URL, port));
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+		std = ByteBuffer.allocate(8192);
+		
+		return true;
+	}
+	
+	public void downloadFile(String path) throws IOException{
+		
+		File f = new File(path);
+		FileOutputStream fos = new FileOutputStream(f);
+		FileChannel out = fos.getChannel();
+		
+		while(socketChannel.read(std) != -1){
+			std.flip();
+			out.write(std);
+			std.clear();
+		}
+		fos.close();
+		out.close();
+	}
+	
+    public void streamFile(File file) throws IOException {
+
+        FileInputStream fis = new FileInputStream(file);
+        FileChannel in = fis.getChannel();
+        
+        while(in.read(std) != -1){
+        	std.flip();
+        	sendBuffer();
+        	std.clear();
+        }
+        fis.close();
+        in.close();
+    }
+    
+	public void sendMessage(String message){
+		putStringIntoBuffer(message + "\n");
+		sendBuffer();
+	}
+	private void sendBuffer(){
+		
+		while(std.hasRemaining()){
+			try {
+				socketChannel.write(std);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		std.flip();
+		std.clear();
+	}
+	
+	private void putStringIntoBuffer(String s){
+		std.clear();
+		std.put(s.getBytes());
+		std.flip();
+	}
+	
+	public String readMessage(){
+		String message = "";
+		std.clear();
+		int ret = 0;
+		try {
+			ret = socketChannel.read(std);
+		} catch (IOException e) {
+			System.out.println("B³¹d przy odczytaniu wiadomoœci");
+		}
+		if(ret == -1){
+			System.out.println("NO MESSAGE");
+		}
+		std.flip();
+
+		byte[] bytes = new byte[100];
+		int i;
+		for(i = 0; i<100 && std.hasRemaining(); i++)
+			bytes[i] = std.get();
+		
+		byte[] bytess= new byte[i];
+		System.arraycopy(bytes, 0, bytess, 0, i);
+		
+		message = new String(bytess);
+		std.clear();
+		return message;
+	}
+	
+	public static class MessageManager{
+		
+		public static String buildMessage(String ... args){
+			String message = "";
+			for(String s : args){
+				message += s + ";";
+			}
+			return message;
+		}
+		public static String hashString(String mes){
+			MessageDigest md5;
+			try {
+				md5 = MessageDigest.getInstance("MD5");
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+				return null; //nie powinna zdarzyæ sie ta sytuacja.
+			}
+			md5.update(mes.getBytes());
+			return (new BigInteger(1,md5.digest())).toString(16);
+		}
+		public static String[] decodeResponse(String response){
+			return response.split("\\;");
+		}
+		public static int whichHostNotUse(String login){
+			int result = 0;
+			
+			return result;
+		}
+		public static String fillLogin(String login){
+			int k = login.length();
+			while(k<20){
+				login += "A";
+				k++;
+			}
+			return login;
+		}
+	}
+}

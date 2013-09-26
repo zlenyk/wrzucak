@@ -1,0 +1,20 @@
+public class Zadanie {
+	static class A {
+		public A(String s) {
+			System.out.print(s);
+		}
+	}
+
+	static class B {
+		static A a = new A("1");
+	}
+
+	static A a = new A("2");
+
+	public Zadanie() {
+		a = new A("3");
+	}
+
+	public static void main(String[] args) {
+	}
+}

@@ -1,0 +1,16 @@
+class A {
+int i;
+A(int i) { this.i = i; }
+}
+class B extends A {
+B() { }
+B(int i) { super(i); }
+B(String s) { try { super(3); } finally { } }
+}
+public class Zadanie {
+public static void main(String[] args) {
+System.out.println(new B().i);
+System.out.println(new B(1).i);
+System.out.println(new B("2").i);
+}
+}
